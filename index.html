@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&display=swap" rel="stylesheet">
 <style>
-  /* ── Reset & base ─────────────────────────────────────────────── */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
@@ -21,6 +20,18 @@
     --accent-green: #9EC49E;
     --radius: 16px;
     --shadow: 0 2px 12px rgba(42, 31, 61, 0.06);
+    --link-bg: rgba(42, 31, 61, 0.03);
+    --link-bg-hover: rgba(42, 31, 61, 0.07);
+  }
+
+  [data-theme="dark"] {
+    --bg: #1A1722;
+    --card: #262230;
+    --text: #E8E4ED;
+    --text-soft: #9B93A8;
+    --shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    --link-bg: rgba(255, 255, 255, 0.05);
+    --link-bg-hover: rgba(255, 255, 255, 0.1);
   }
 
   html { height: 100%; }
@@ -33,6 +44,70 @@
     padding: 24px;
     display: flex;
     flex-direction: column;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  /* ── Top bar ──────────────────────────────────────────────────── */
+  .top-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    padding: 0 4px 16px;
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 10px;
+    border: 1.5px solid var(--text-soft);
+    background: transparent;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+
+  .toggle-btn:hover {
+    border-color: var(--text);
+    background: var(--link-bg-hover);
+  }
+
+  .toggle-btn svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.3s ease;
+  }
+
+  .toggle-btn.active svg {
+    transform: rotate(180deg);
+  }
+
+  .lang-toggle {
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+
+  .lang-toggle .lang-opt {
+    opacity: 0.4;
+    transition: opacity 0.2s;
+  }
+
+  .lang-toggle .lang-opt.active {
+    opacity: 1;
+  }
+
+  .lang-sep {
+    opacity: 0.3;
+    margin: 0 2px;
   }
 
   /* ── Main 3-column layout ─────────────────────────────────────── */
@@ -62,6 +137,19 @@
     width: 100%;
   }
 
+  .logo-anim-wrap {
+    display: flex; align-items: center; justify-content: center;
+    width: 260px;
+    height: 320px;
+    overflow: visible;
+  }
+
+  .logo-wrap-inner {
+    display: flex; flex-direction: column; align-items: center;
+    transform: scale(1.35);
+    transform-origin: center center;
+  }
+
   /* ── Center column — typeform ─────────────────────────────────── */
   .col-center {
     display: flex;
@@ -78,6 +166,7 @@
     min-height: 520px;
     display: flex;
     flex-direction: column;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
   }
 
   .form-card [data-tf-live] {
@@ -99,6 +188,7 @@
     box-shadow: var(--shadow);
     padding: 20px;
     text-align: center;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
   }
 
   .cv-card h3 {
@@ -123,6 +213,7 @@
     cursor: pointer;
     text-decoration: none;
     transition: all 0.2s ease;
+    white-space: nowrap;
   }
 
   .cv-btn:hover {
@@ -146,6 +237,7 @@
     box-shadow: var(--shadow);
     padding: 20px;
     flex: 1;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
   }
 
   .links-card h3 {
@@ -173,21 +265,18 @@
     font-size: 13px;
     font-weight: 400;
     transition: all 0.2s ease;
-    background: rgba(42, 31, 61, 0.03);
+    background: var(--link-bg);
   }
 
   .link-item:hover {
-    background: rgba(42, 31, 61, 0.07);
+    background: var(--link-bg-hover);
     transform: translateX(3px);
   }
 
   .link-icon {
-    width: 32px;
-    height: 32px;
+    width: 32px; height: 32px;
     border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
 
@@ -196,6 +285,10 @@
   .link-icon.gh  { background: rgba(42, 31, 61, 0.08); color: var(--text); }
   .link-icon.li  { background: rgba(192, 174, 237, 0.25); color: #5B4BA0; }
   .link-icon.em  { background: rgba(237, 170, 178, 0.25); color: #B85A64; }
+
+  [data-theme="dark"] .link-icon.gh { background: rgba(255,255,255,0.1); }
+  [data-theme="dark"] .link-icon.li { background: rgba(192,174,237,0.15); color: #B8AAEE; }
+  [data-theme="dark"] .link-icon.em { background: rgba(237,170,178,0.15); color: #EDAAB2; }
 
   .link-label { font-weight: 500; }
   .link-handle { color: var(--text-soft); font-size: 12px; font-weight: 300; }
@@ -218,20 +311,7 @@
   }
   .footer a:hover { border-color: var(--text-soft); }
 
-  /* ── Animated logo (inlined from standalone) ──────────────────── */
-  .logo-anim-wrap {
-    display: flex; align-items: center; justify-content: center;
-    width: 260px;
-    height: 320px;
-    overflow: visible;
-  }
-
-  .logo-wrap-inner {
-    display: flex; flex-direction: column; align-items: center;
-    transform: scale(1.35);
-    transform-origin: center center;
-  }
-
+  /* ── Animated logo ────────────────────────────────────────────── */
   .persp {
     perspective: 750px;
     perspective-origin: 50% 140%;
@@ -239,26 +319,21 @@
 
   .scene {
     position: relative;
-    width: 140px;
-    height: 280px;
+    width: 140px; height: 280px;
     overflow: visible;
     transform-style: preserve-3d;
     transform: rotateX(-45deg) rotateY(36deg);
   }
 
   .bunny {
-    position: absolute;
-    left: 12px;
-    width: 72px;
+    position: absolute; left: 12px; width: 72px;
     transform-style: preserve-3d;
     will-change: top;
   }
 
   .ears {
-    display: flex;
-    justify-content: center;
-    gap: 18px;
-    padding-bottom: 1px;
+    display: flex; justify-content: center;
+    gap: 18px; padding-bottom: 1px;
     transform-style: preserve-3d;
   }
 
@@ -273,9 +348,9 @@
 
   @keyframes ear-idle {
     0%   { transform: rotateZ(-3deg) rotateX(4deg); }
-    35%  { transform: rotateZ(1deg)  rotateX(-2deg); }
+    35%  { transform: rotateZ(1deg) rotateX(-2deg); }
     65%  { transform: rotateZ(-1deg) rotateX(1deg); }
-    100% { transform: rotateZ(3deg)  rotateX(-4deg); }
+    100% { transform: rotateZ(3deg) rotateX(-4deg); }
   }
 
   .ear-face {
@@ -380,6 +455,8 @@
   .eye  { width: 7px; height: 7px; border-radius: 2px; background: #2A1F3D; }
   .nose { width: 6px; height: 5px; border-radius: 2.5px; }
 
+  [data-theme="dark"] .eye { background: #C8C4CC; opacity: 0.85; }
+
   /* ── Entrance animations ──────────────────────────────────────── */
   @keyframes fade-up {
     from { opacity: 0; transform: translateY(16px); }
@@ -423,6 +500,31 @@
 </head>
 <body>
 
+<!-- ══ Top bar: theme + language toggles ══ -->
+<div class="top-bar">
+  <button class="toggle-btn lang-toggle" id="lang-toggle" onclick="toggleLang()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="2" y1="12" x2="22" y2="12"/>
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+    </svg>
+    <span class="lang-opt active" id="lang-en">EN</span><span class="lang-sep">/</span><span class="lang-opt" id="lang-de">DE</span>
+  </button>
+
+  <button class="toggle-btn" id="theme-toggle" onclick="toggleTheme()">
+    <svg id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"/>
+      <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+      <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </svg>
+    <svg id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+</div>
+
 <div class="page">
 
   <!-- ══ Left column: Logo ══ -->
@@ -441,8 +543,8 @@
   <!-- ══ Center column: Typeform ══ -->
   <div class="col-center">
     <div class="form-card" id="form-card">
-      <div data-tf-live="01KM4N4645514PFXY148KKEAEF"></div>
-      <script src="//embed.typeform.com/next/embed.js"></script>
+      <div id="tf-en" data-tf-live="01KM4N4645514PFXY148KKEAEF"></div>
+      <div id="tf-de" data-tf-live="01KM4SWAE0RAXT5GKR8JYP4N6A" style="display:none"></div>
     </div>
   </div>
 
@@ -450,22 +552,20 @@
   <div class="col-right">
 
     <div class="cv-card">
-      <h3>Résumé</h3>
-      <!-- Replace # with actual PDF link -->
-      <a href="#" class="cv-btn" download>
+      <h3 data-i18n="cv">R&#233;sum&#233;</h3>
+      <a id="cv-link" href="/cv.pdf" class="cv-btn" download>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
           <polyline points="7 10 12 15 17 10"/>
           <line x1="12" y1="15" x2="12" y2="3"/>
         </svg>
-        Download PDF
+        <span data-i18n="cvBtn">Download PDF</span>
       </a>
     </div>
 
     <div class="links-card">
-      <h3>Connect</h3>
+      <h3 data-i18n="connect">Connect</h3>
       <ul class="link-list">
-        <!-- GitHub -->
         <li>
           <a href="https://github.com/0xbound13ss" target="_blank" rel="noopener" class="link-item">
             <div class="link-icon gh">
@@ -477,7 +577,6 @@
             </div>
           </a>
         </li>
-        <!-- LinkedIn -->
         <li>
           <a href="https://www.linkedin.com/in/ivanpush/" target="_blank" rel="noopener" class="link-item">
             <div class="link-icon li">
@@ -489,9 +588,8 @@
             </div>
           </a>
         </li>
-        <!-- Email -->
         <li>
-          <a href="/cdn-cgi/l/email-protection#345c5158585b745a515d551a53465b4144" class="link-item">
+          <a id="email-link" href="/cdn-cgi/l/email-protection#573f323b3b38717461636c39323e36793025382227" class="link-item">
             <div class="link-icon em">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="2" y="4" width="20" height="16" rx="2"/>
@@ -500,7 +598,7 @@
             </div>
             <div>
               <div class="link-label">Email</div>
-              <div class="link-handle"><span class="__cf_email__" data-cfemail="abc3cec7c7c4ebc5cec2ca85ccd9c4dedb">[email&#160;protected]</span></div>
+              <div class="link-handle" id="email-display">hello&#64;neia.group</div>
             </div>
           </a>
         </li>
@@ -512,17 +610,22 @@
 </div>
 
 <footer class="footer">
-  &copy; 2026 Ivan Neia &middot; <a href="https://neia.group">neia.group</a>
+  &copy; 2026 &middot; <a href="https://neia.group">NEIA</a>
 </footer>
 
-<!-- ── Bunny animation engine ──────────────────────────────────── -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const SLOT_Y    = [6, 91, 176];
-const CYCLE_MS  = 1350;
-const ARC_MS    = 420;
-const SETTLE_MS = 250;
+<!-- ── Typeform embed SDK ───────────────────────────────────────── -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="//embed.typeform.com/next/embed.js"></script>
 
-const themes = [
+<!-- ── Theme + Language toggles ─────────────────────────────────── -->
+<script>
+// ── i18n strings ──────────────────────────────────────────────────────────
+const i18n = {
+  en: { cv: 'R\u00e9sum\u00e9', cvBtn: 'Download PDF', connect: 'Connect' },
+  de: { cv: 'Lebenslauf', cvBtn: 'PDF herunterladen', connect: 'Kontakt' }
+};
+
+// ── Bunny color palettes ──────────────────────────────────────────────────
+var themesLight = [
   { top:'#F5F0E8', front:'#E0D9CE', right:'#CCC4B8', back:'#C0B8AC', bottom:'#B8B0A4', left:'#D4CCC0',
     earF:'#EDE6DB', earB:'#C8C0B6', earTop:'#F0EBE2', earRight:'#C4BAB0', inner:'#EDAAB2' },
   { top:'#EDE9FA', front:'#D4CEE8', right:'#BEB8D8', back:'#B4AED0', bottom:'#ACA6C8', left:'#C8C2DA',
@@ -530,6 +633,79 @@ const themes = [
   { top:'#E4F2E4', front:'#C8DCC8', right:'#ADC4AD', back:'#A0B8A0', bottom:'#98B098', left:'#B8CCB8',
     earF:'#D8EDD8', earB:'#AECAAE', earTop:'#E0EEE0', earRight:'#A0BC9E', inner:'#9EC49E' },
 ];
+
+var themesDark = [
+  /* warm slate — soft charcoal with rosy accents */
+  { top:'#5C545E', front:'#4A424E', right:'#3E3842', back:'#363038', bottom:'#302C34', left:'#443E48',
+    earF:'#564E58', earB:'#3E3842', earTop:'#605860', earRight:'#3A3440', inner:'#C47882' },
+  /* midnight indigo — deep blue with cool violet accents */
+  { top:'#464868', front:'#383A58', right:'#2E3050', back:'#282A46', bottom:'#242640', left:'#34365A',
+    earF:'#424460', earB:'#2E3050', earTop:'#4C4E6E', earRight:'#2A2C4E', inner:'#7E82C8' },
+  /* dark teal — ocean depth with aqua accents */
+  { top:'#3E5E5A', front:'#304E4A', right:'#28423E', back:'#223A36', bottom:'#1E3430', left:'#2C4844',
+    earF:'#3A5854', earB:'#28423E', earTop:'#42625E', earRight:'#263E3C', inner:'#5AACA0' },
+];
+
+let currentLang = 'en';
+let currentTheme = 'light';
+
+// Respect saved prefs only — default is light
+if (localStorage.getItem('hs-theme')) setTheme(localStorage.getItem('hs-theme'));
+if (localStorage.getItem('hs-lang')) setLang(localStorage.getItem('hs-lang'));
+
+function toggleTheme() {
+  setTheme(currentTheme === 'light' ? 'dark' : 'light');
+}
+
+function setTheme(t) {
+  currentTheme = t;
+  document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : '');
+  document.getElementById('icon-sun').style.display  = t === 'dark' ? 'none' : '';
+  document.getElementById('icon-moon').style.display = t === 'dark' ? '' : 'none';
+  localStorage.setItem('hs-theme', t);
+  // Recolor bunnies if loaded
+  if (typeof recolorBunnies === 'function') {
+    recolorBunnies(t === 'dark' ? themesDark : themesLight);
+  }
+}
+
+function toggleLang() {
+  setLang(currentLang === 'en' ? 'de' : 'en');
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+
+  // Update toggle indicator
+  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+  document.getElementById('lang-de').classList.toggle('active', lang === 'de');
+
+  // Update i18n text
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (i18n[lang][key]) el.textContent = i18n[lang][key];
+  });
+
+  // Swap typeform
+  document.getElementById('tf-en').style.display = lang === 'en' ? '' : 'none';
+  document.getElementById('tf-de').style.display = lang === 'de' ? '' : 'none';
+
+  // Swap CV download link
+  document.getElementById('cv-link').href = lang === 'de' ? '/lebenslauf.pdf' : '/cv.pdf';
+
+  localStorage.setItem('hs-lang', lang);
+}
+</script>
+
+<!-- ── Bunny animation engine ──────────────────────────────────── -->
+<script>
+const SLOT_Y    = [6, 91, 176];
+const CYCLE_MS  = 1350;
+const ARC_MS    = 420;
+const SETTLE_MS = 250;
+
+var themes = currentTheme === 'dark' ? themesDark : themesLight;
 
 function makeBunny(t) {
   const b = document.createElement('div');
@@ -568,6 +744,29 @@ function makeBunny(t) {
 
 const scene   = document.getElementById('scene');
 const bunnies = themes.map(t => { const b = makeBunny(t); scene.appendChild(b); return b; });
+
+function recolorBunnies(ts) {
+  themes = ts;
+  bunnies.forEach((b, i) => {
+    const t = ts[i];
+    const ears = b.querySelectorAll('.ear');
+    ears.forEach(ear => {
+      ear.querySelector('.ef-front').style.background = t.earF;
+      ear.querySelector('.ef-back').style.background  = t.earB;
+      ear.querySelector('.ear-top').style.background   = t.earTop;
+      ear.querySelector('.ear-right').style.background = t.earRight;
+      ear.querySelector('.ear-inner').style.background = t.inner;
+    });
+    const cube = b.querySelector('.cube');
+    cube.querySelector('.fc-top').style.background    = t.top;
+    cube.querySelector('.fc-front').style.background  = t.front;
+    cube.querySelector('.fc-right').style.background  = t.right;
+    cube.querySelector('.fc-back').style.background   = t.back;
+    cube.querySelector('.fc-bottom').style.background = t.bottom;
+    cube.querySelector('.fc-left').style.background   = t.left;
+    cube.querySelector('.nose').style.background      = t.inner;
+  });
+}
 
 let slots     = [0, 1, 2];
 let animating = false;
