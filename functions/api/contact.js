@@ -114,10 +114,13 @@ async function handlePost(request, env) {
       body: JSON.stringify({
         from: FROM_ADDR,
         to: [RECIPIENT],
-        replyTo: email,
+        reply_to: email,
         subject,
         html,
         text,
+        headers: {
+          'Reply-To': email,
+        },
       }),
     });
 
