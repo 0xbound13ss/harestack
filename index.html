@@ -9,7 +9,7 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="description" content="Backend & DevOps developer. Get in touch.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -25,6 +25,13 @@
     --shadow: 0 2px 12px rgba(42, 31, 61, 0.06);
     --link-bg: rgba(42, 31, 61, 0.03);
     --link-bg-hover: rgba(42, 31, 61, 0.07);
+    /* Game tokens */
+    --g-bg:#FAFAF8;--g-panel:#FFFFFF;--g-border:#E4E0DC;
+    --g-text:#3B3252;--g-dim:#958BA5;--g-bright:#2A1F3D;
+    --g-red:#C44;--g-green:#3A8A3A;--g-yellow:#9E7C20;--g-blue:#3070B8;
+    --g-cyan:#1A8A8A;--g-purple:#8050B0;--g-orange:#B06820;
+    --g-red-bg:rgba(204,68,68,0.07);--g-term-bg:#FEFEFE;--g-input-bg:#F6F4F2;
+    --g-bar-from:#C0AEED;--g-bar-to:#EDAAB2;
   }
 
   [data-theme="dark"] {
@@ -35,6 +42,12 @@
     --shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
     --link-bg: rgba(255, 255, 255, 0.05);
     --link-bg-hover: rgba(255, 255, 255, 0.1);
+    --g-bg:#0b0e14;--g-panel:#12161f;--g-border:#1a1f2e;
+    --g-text:#c8ccd4;--g-dim:#5c6370;--g-bright:#e8ecf2;
+    --g-red:#e06c75;--g-green:#98c379;--g-yellow:#e5c07b;--g-blue:#61afef;
+    --g-cyan:#56b6c2;--g-purple:#c678dd;--g-orange:#d19a66;
+    --g-red-bg:rgba(224,108,117,0.08);--g-term-bg:#0b0e14;--g-input-bg:#12161f;
+    --g-bar-from:#c678dd;--g-bar-to:#e06c75;
   }
 
   html { height: 100%; }
@@ -44,6 +57,7 @@
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
+    min-height: 100dvh;
     padding: 24px;
     display: flex;
     flex-direction: column;
@@ -807,6 +821,240 @@
 
   [data-theme="dark"] .eye { background: #C8C4CC; opacity: 0.85; }
 
+  /* ── Game section ───────────────────────────────────────────── */
+  .game-section {
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    padding-top: 8px;
+  }
+
+  .game-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .game-divider::before, .game-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(42, 31, 61, 0.08);
+  }
+
+  [data-theme="dark"] .game-divider::before,
+  [data-theme="dark"] .game-divider::after {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .game-divider-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--g-red);
+    color: var(--g-red);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif;
+    white-space: nowrap;
+  }
+
+  .game-divider-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--g-red);
+    animation: g-blink 1.5s ease-in-out infinite;
+  }
+
+  @keyframes g-blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  /* Game screens */
+  .g-screen { display: none; }
+  .g-screen.active { display: flex; }
+
+  /* Title screen */
+  #g-title {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    padding: 24px 16px 32px;
+  }
+
+  .g-title-h {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .g-title-h span { color: var(--g-red); }
+
+  .g-title-sub {
+    color: var(--text-soft);
+    font-size: 13px;
+    max-width: 420px;
+    line-height: 1.55;
+  }
+
+  .g-how {
+    color: var(--text-soft);
+    font-size: 11.5px;
+    max-width: 480px;
+    line-height: 1.7;
+    text-align: left;
+    background: var(--card);
+    border: 1px solid rgba(42,31,61,0.06);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    box-shadow: var(--shadow);
+  }
+
+  [data-theme="dark"] .g-how {
+    border-color: rgba(255,255,255,0.04);
+  }
+
+  .g-how b { color: var(--text); font-weight: 500; }
+
+  .g-how code {
+    background: var(--link-bg-hover);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--g-cyan);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+  }
+
+  .g-start-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 32px;
+    border-radius: 10px;
+    border: 1.5px solid var(--text);
+    background: var(--text);
+    color: var(--card);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .g-start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(42, 31, 61, 0.12);
+  }
+
+  [data-theme="dark"] .g-start-btn {
+    border-color: var(--g-red);
+    background: var(--g-red);
+    color: #fff;
+  }
+
+  [data-theme="dark"] .g-start-btn:hover {
+    box-shadow: 0 4px 16px rgba(224, 108, 117, 0.25);
+  }
+
+  /* Game frame */
+  .g-frame {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--g-border);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    background: var(--g-panel);
+    min-height: 480px;
+  }
+
+  .g-progress { height: 3px; background: var(--g-border); overflow: hidden; flex-shrink: 0; }
+  .g-progress-bar { height: 100%; background: linear-gradient(90deg, var(--g-bar-from), var(--g-bar-to)); transition: width 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+
+  .g-alert { padding: 8px 14px; display: flex; align-items: center; gap: 10px; background: var(--g-red-bg); border-bottom: 1px solid var(--g-border); flex-shrink: 0; }
+  .g-alert-sev { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; background: var(--g-red); color: #fff; flex-shrink: 0; }
+  .g-alert-sev.sev2 { background: var(--g-orange); }
+  .g-alert-msg { color: var(--g-red); font-size: 11.5px; font-weight: 500; font-family: 'JetBrains Mono', monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+  .g-alert-time { margin-left: auto; color: var(--g-dim); font-size: 10px; flex-shrink: 0; font-family: 'JetBrains Mono', monospace; }
+
+  .g-stats { display: flex; gap: 1px; background: var(--g-border); border-bottom: 1px solid var(--g-border); flex-shrink: 0; }
+  .g-stat { flex: 1; background: var(--g-panel); padding: 7px 12px; display: flex; flex-direction: column; gap: 1px; }
+  .g-stat-label { font-size: 9px; font-weight: 500; color: var(--g-dim); text-transform: uppercase; letter-spacing: 0.06em; }
+  .g-stat-val { font-size: 14px; font-weight: 700; color: var(--g-bright); font-family: 'JetBrains Mono', monospace; }
+  .g-stat-val.red { color: var(--g-red); }
+  .g-stat-val.green { color: var(--g-green); }
+  .g-stat-val.yellow { color: var(--g-yellow); }
+
+  .g-main { flex: 1; display: flex; min-height: 0; }
+
+  .g-term-wrap { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+  .g-term-header { padding: 6px 12px; background: var(--g-panel); border-bottom: 1px solid var(--g-border); display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .g-tdot { width: 7px; height: 7px; border-radius: 50%; }
+  .g-tdot.r { background: var(--g-red); } .g-tdot.y { background: var(--g-yellow); } .g-tdot.g { background: var(--g-green); }
+  .g-term-title { font-size: 10px; color: var(--g-dim); margin-left: 3px; font-family: 'JetBrains Mono', monospace; }
+
+  .g-term { flex: 1; overflow-y: auto; padding: 8px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.6; background: var(--g-term-bg); scrollbar-width: thin; scrollbar-color: var(--g-border) transparent; max-height: 340px; }
+  .g-term::-webkit-scrollbar { width: 5px; }
+  .g-term::-webkit-scrollbar-thumb { background: var(--g-border); border-radius: 3px; }
+
+  .t-line { white-space: pre-wrap; word-break: break-all; color: var(--g-text); }
+  .t-line.cmd { color: var(--g-green); } .t-line.cmd::before { content: '$ '; color: var(--g-dim); }
+  .t-line.err { color: var(--g-red); } .t-line.warn { color: var(--g-yellow); }
+  .t-line.info { color: var(--g-blue); } .t-line.dim { color: var(--g-dim); }
+  .t-line .red{color:var(--g-red)}.t-line .green{color:var(--g-green)}.t-line .yellow{color:var(--g-yellow)}.t-line .blue{color:var(--g-blue)}.t-line .cyan{color:var(--g-cyan)}.t-line .purple{color:var(--g-purple)}.t-line .orange{color:var(--g-orange)}.t-line .dim{color:var(--g-dim)}.t-line .bright{color:var(--g-bright)}
+
+  .g-input-row { display: flex; align-items: center; padding: 7px 12px; background: var(--g-input-bg); border-top: 1px solid var(--g-border); flex-shrink: 0; gap: 7px; }
+  .g-input-prompt { color: var(--g-green); font-weight: 500; flex-shrink: 0; font-size: 11.5px; font-family: 'JetBrains Mono', monospace; }
+  #g-cmd { flex: 1; background: none; border: none; color: var(--g-bright); font-family: 'JetBrains Mono', monospace; font-size: 11.5px; outline: none; caret-color: var(--g-green); }
+  #g-cmd::placeholder { color: var(--g-dim); }
+
+  .g-sidebar { width: 200px; border-left: 1px solid var(--g-border); display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto; background: var(--g-panel); }
+  .g-sb-section { padding: 10px 12px; border-bottom: 1px solid var(--g-border); }
+  .g-sb-title { font-size: 9px; font-weight: 600; color: var(--g-dim); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 7px; }
+  .g-svc-row { display: flex; align-items: center; gap: 7px; padding: 3px 0; font-size: 10.5px; font-family: 'JetBrains Mono', monospace; }
+  .g-svc-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .g-svc-dot.ok { background: var(--g-green); } .g-svc-dot.warn { background: var(--g-yellow); } .g-svc-dot.crit { background: var(--g-red); animation: g-blink 1s step-end infinite; }
+  .g-svc-name { color: var(--g-text); } .g-svc-status { margin-left: auto; font-size: 9px; color: var(--g-dim); text-transform: uppercase; }
+  .g-hint-box { font-size: 10.5px; color: var(--g-dim); line-height: 1.5; background: var(--link-bg); border-radius: 5px; padding: 8px 10px; }
+  .g-hint-box code { color: var(--g-cyan); background: var(--link-bg-hover); padding: 1px 4px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; font-size: 10px; }
+
+  /* Results */
+  #g-results { flex-direction: column; align-items: center; text-align: center; gap: 14px; padding: 28px 16px; }
+  .g-results-card { background: var(--card); border: 1px solid var(--g-border); border-radius: var(--radius); padding: 24px 32px; max-width: 440px; width: 100%; box-shadow: var(--shadow); }
+  .g-grade { font-family: 'Fraunces', serif; font-size: 48px; font-weight: 500; line-height: 1; }
+  .g-grade.s{color:var(--g-purple)}.g-grade.a{color:var(--g-green)}.g-grade.b{color:var(--g-blue)}.g-grade.c{color:var(--g-yellow)}.g-grade.d{color:var(--g-red)}
+  .g-results-label { font-size: 12px; color: var(--text-soft); margin-top: 3px; }
+  .g-results-score { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 500; color: var(--text); margin-top: 8px; }
+  .g-breakdown { text-align: left; margin-top: 14px; display: flex; flex-direction: column; gap: 3px; }
+  .g-rb-row { display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 1px solid var(--g-border); }
+  .g-rb-row:last-child { border: none; }
+  .g-rb-label { color: var(--text-soft); } .g-rb-val { color: var(--text); font-weight: 500; font-family: 'JetBrains Mono', monospace; }
+  .g-rb-val.green{color:var(--g-green)}.g-rb-val.red{color:var(--g-red)}.g-rb-val.yellow{color:var(--g-yellow)}
+  .g-results-desc { font-size: 11px; color: var(--text-soft); margin-top: 8px; line-height: 1.45; text-align: left; }
+
+  .g-next-btn { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; padding: 10px 28px; border-radius: 10px; border: 1.5px solid var(--text); background: var(--text); color: var(--card); cursor: pointer; transition: all 0.2s; }
+  .g-next-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(42,31,61,0.12); }
+  [data-theme="dark"] .g-next-btn { border-color: var(--g-green); background: var(--g-green); color: #0b0e14; }
+
+  .g-final-rounds { display: flex; gap: 8px; margin-top: 12px; justify-content: center; flex-wrap: wrap; }
+  .g-fr-card { background: var(--link-bg); border: 1px solid var(--g-border); border-radius: 8px; padding: 8px 12px; min-width: 100px; text-align: center; }
+  .g-fr-num { font-size: 9px; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.05em; }
+  .g-fr-name { font-size: 10px; color: var(--text); margin: 2px 0; }
+  .g-fr-score { font-size: 14px; font-weight: 700; color: var(--text); font-family: 'JetBrains Mono', monospace; }
+  .g-fr-time { font-size: 9px; color: var(--text-soft); }
+
+  @media (max-width: 768px) {
+    .g-sidebar { display: none; }
+    .g-stats { flex-wrap: wrap; }
+    .g-stat { min-width: 33%; }
+  }
+  @media (max-width: 480px) {
+    .g-stat { min-width: 50%; padding: 5px 8px; }
+  }
+
   /* ── Entrance animations ──────────────────────────────────────── */
   @keyframes fade-up {
     from { opacity: 0; transform: translateY(16px); }
@@ -1066,7 +1314,7 @@
           </a>
         </li>
         <li>
-          <a id="email-link" href="mailto:hello@neia.group" class="link-item">
+          <a id="email-link" href="/cdn-cgi/l/email-protection#acc4c9c0c0c3ecc2c9c5cd82cbdec3d9dc" class="link-item">
             <div class="link-icon em">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="2" y="4" width="20" height="16" rx="2"/>
@@ -1086,16 +1334,99 @@
 
 </div>
 
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ══ Incident Commander — embedded game ══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="game-section">
+
+  <!-- Divider -->
+  <div class="game-divider">
+    <div class="game-divider-badge"><div class="game-divider-dot"></div><span data-i18n="g_badge">ON-CALL SIMULATOR</span></div>
+  </div>
+
+  <!-- Title screen -->
+  <div class="g-screen active" id="g-title">
+    <h2 class="g-title-h">Incident <span>Commander</span></h2>
+    <p class="g-title-sub" data-i18n="g_subtitle">You're the on-call engineer. Diagnose production incidents, find the root cause, and fix it before customers notice.</p>
+    <div class="g-how">
+      <b data-i18n="g_how_title">How to play</b><br><br>
+      <span data-i18n="g_how_inv">Investigate:</span>
+      <code>status</code> <code>logs &lt;svc&gt;</code> <code>metrics &lt;svc&gt;</code> <code>trace</code><br>
+      <span data-i18n="g_how_fix">Fix:</span>
+      <code>restart</code> <code>rollback</code> <code>scale</code> <code>config</code> <code>flush</code><br><br>
+      <span data-i18n="g_how_rounds">3 rounds · escalating difficulty · scored on speed &amp; accuracy</span>
+    </div>
+    <button class="g-start-btn" onclick="gStartGame()" data-i18n="g_start">Start Shift</button>
+  </div>
+
+  <!-- Game screen -->
+  <div class="g-screen" id="g-game">
+    <div class="g-frame">
+      <div class="g-progress"><div class="g-progress-bar" id="g-pbar" style="width:0%"></div></div>
+      <div class="g-alert">
+        <span class="g-alert-sev" id="g-sev">SEV-1</span>
+        <span class="g-alert-msg" id="g-msg"></span>
+        <span class="g-alert-time" id="g-time"></span>
+      </div>
+      <div class="g-stats">
+        <div class="g-stat"><span class="g-stat-label" data-i18n="g_timer">Timer</span><span class="g-stat-val" id="g-timer">2:00</span></div>
+        <div class="g-stat"><span class="g-stat-label" data-i18n="g_round">Round</span><span class="g-stat-val" id="g-round">1/3</span></div>
+        <div class="g-stat"><span class="g-stat-label" data-i18n="g_users">Affected</span><span class="g-stat-val red" id="g-users">0</span></div>
+        <div class="g-stat"><span class="g-stat-label" data-i18n="g_cmds">Cmds</span><span class="g-stat-val" id="g-cmds">0</span></div>
+        <div class="g-stat"><span class="g-stat-label" data-i18n="g_score">Score</span><span class="g-stat-val green" id="g-score">0</span></div>
+      </div>
+      <div class="g-main">
+        <div class="g-term-wrap">
+          <div class="g-term-header"><span class="g-tdot r"></span><span class="g-tdot y"></span><span class="g-tdot g"></span><span class="g-term-title">incident-commander</span></div>
+          <div class="g-term" id="g-term"></div>
+          <div class="g-input-row"><span class="g-input-prompt">$</span><input type="text" id="g-cmd" autocomplete="off" spellcheck="false"></div>
+        </div>
+        <div class="g-sidebar">
+          <div class="g-sb-section"><div class="g-sb-title" data-i18n="g_services">Services</div><div id="g-svc-list"></div></div>
+          <div class="g-sb-section"><div class="g-sb-title" data-i18n="g_hints">Hints</div><div class="g-hint-box" id="g-hint"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results screen -->
+  <div class="g-screen" id="g-results">
+    <div class="g-results-card" id="g-rcard"></div>
+    <button class="g-next-btn" id="g-next" onclick="gNextRound()"></button>
+  </div>
+
+</div>
+
 <footer class="footer">
   &copy; 2026 &middot; <a href="https://neia.group">NEIA</a>
 </footer>
 
 <!-- ── Theme + Language + Form logic ────────────────────────────── -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── i18n ──────────────────────────────────────────────────────────
 const i18n = {
   en: {
     cv: 'R\u00e9sum\u00e9', cvBtn: 'Download PDF', connect: 'Connect',
+    // Game card
+    game_title: 'Incident Commander',
+    game_sub: 'Can you resolve production incidents under pressure? Try the on-call simulator.',
+    // Game i18n
+    g_badge:'ON-CALL SIMULATOR', g_subtitle:'You\'re the on-call engineer. Diagnose production incidents, find the root cause, and fix it before customers notice.',
+    g_how_title:'How to play', g_how_inv:'Investigate:', g_how_fix:'Fix:', g_how_rounds:'3 rounds \u00b7 escalating difficulty \u00b7 scored on speed & accuracy',
+    g_start:'Start Shift', g_timer:'Timer', g_round:'Round', g_users:'Affected', g_cmds:'Cmds', g_score:'Score',
+    g_services:'Services', g_hints:'Hints', g_input_ph:'Type a command... (try \'help\')',
+    g_hint_start:'Start with <code>status</code> to see all services, then <code>logs</code> on anything that looks off.',
+    g_alert:'INCIDENT ALERT', g_help:'Type <span class="cyan">help</span> for commands.',
+    g_resolved:'INCIDENT RESOLVED', g_root:'root cause', g_timeup:'TIME\'S UP \u2014 escalated.',
+    g_root_was:'Root cause was', g_applying:'Applying', g_no_effect:'no effect.', g_hint_pfx:'Hint',
+    g_usage:'Usage', g_unknown:'Unknown service', g_avail:'Available', g_no_logs:'No logs for', g_not_found:'Unknown command',
+    g_r_round:'Round', g_r_expired:'Time Expired', g_r_base:'Base', g_r_time:'Time bonus', g_r_used:'used',
+    g_r_eff:'Efficiency', g_r_cmds:'cmds', g_r_fix:'Fix quality', g_r_first:'First try', g_r_impact:'User impact', g_r_affected:'affected',
+    g_r_next:'Next Round', g_r_final:'Final Score', g_r_again:'Play Again',
+    g_grade_s:'Legendary SRE', g_grade_a:'Senior On-Call', g_grade_b:'Reliable Responder', g_grade_c:'Junior Pager-Holder', g_grade_d:'Still in Training',
+    g_h_inv:'Investigation', g_h_act:'Actions', g_h_other:'Other',
+    g_h_status:'Service overview', g_h_logs:'View logs', g_h_metrics:'CPU, mem, disk', g_h_describe:'Service details', g_h_trace:'Request traces',
+    g_h_restart:'Restart service', g_h_rollback:'Rollback version', g_h_scale:'Scale replicas', g_h_config:'Update config', g_h_flush:'Flush cache', g_h_clear:'Clear terminal',
     // Form strings
     stepWelcome: 'Welcome',
     stepDetails: 'Details',
@@ -1137,6 +1468,25 @@ const i18n = {
   },
   de: {
     cv: 'Lebenslauf', cvBtn: 'PDF herunterladen', connect: 'Kontakt',
+    // Game card
+    game_title: 'Incident Commander',
+    game_sub: 'Kannst du Produktionsvorf\u00e4lle unter Druck l\u00f6sen? Teste den Bereitschafts-Simulator.',
+    g_badge:'BEREITSCHAFTS-SIMULATOR', g_subtitle:'Du bist der diensthabende Ingenieur. Finde die Ursache und behebe sie, bevor Kunden es merken.',
+    g_how_title:'So wird gespielt', g_how_inv:'Untersuchen:', g_how_fix:'Reparieren:', g_how_rounds:'3 Runden \u00b7 steigende Schwierigkeit \u00b7 Tempo & Pr\u00e4zision',
+    g_start:'Schicht starten', g_timer:'Timer', g_round:'Runde', g_users:'Betroffen', g_cmds:'Befehle', g_score:'Punkte',
+    g_services:'Dienste', g_hints:'Tipps', g_input_ph:'Befehl eingeben... (versuche \'help\')',
+    g_hint_start:'Starte mit <code>status</code>, dann <code>logs</code> bei auff\u00e4lligen Diensten.',
+    g_alert:'VORFALLALARM', g_help:'Tippe <span class="cyan">help</span> f\u00fcr Befehle.',
+    g_resolved:'VORFALL BEHOBEN', g_root:'Ursache', g_timeup:'ZEIT ABGELAUFEN \u2014 eskaliert.',
+    g_root_was:'Ursache war', g_applying:'Wende an', g_no_effect:'kein Effekt.', g_hint_pfx:'Tipp',
+    g_usage:'Verwendung', g_unknown:'Unbekannter Dienst', g_avail:'Verf\u00fcgbar', g_no_logs:'Keine Logs f\u00fcr', g_not_found:'Unbekannter Befehl',
+    g_r_round:'Runde', g_r_expired:'Zeit abgelaufen', g_r_base:'Basis', g_r_time:'Zeitbonus', g_r_used:'verbraucht',
+    g_r_eff:'Effizienz', g_r_cmds:'Befehle', g_r_fix:'Reparaturqualit\u00e4t', g_r_first:'Erster Versuch', g_r_impact:'Nutzer-Auswirkung', g_r_affected:'betroffen',
+    g_r_next:'N\u00e4chste Runde', g_r_final:'Endergebnis', g_r_again:'Nochmal',
+    g_grade_s:'Legend\u00e4rer SRE', g_grade_a:'Senior-Bereitschaft', g_grade_b:'Zuverl\u00e4ssiger Responder', g_grade_c:'Junior-Piepser', g_grade_d:'Noch in Ausbildung',
+    g_h_inv:'Untersuchung', g_h_act:'Aktionen', g_h_other:'Sonstige',
+    g_h_status:'Dienst\u00fcbersicht', g_h_logs:'Logs ansehen', g_h_metrics:'CPU, Mem, Disk', g_h_describe:'Dienstdetails', g_h_trace:'Request-Traces',
+    g_h_restart:'Dienst neustarten', g_h_rollback:'Version zur\u00fcckkehren', g_h_scale:'Skalieren', g_h_config:'Config \u00e4ndern', g_h_flush:'Cache leeren', g_h_clear:'Terminal leeren',
     stepWelcome: 'Willkommen',
     stepDetails: 'Details',
     stepContact: 'Kontakt',
@@ -1238,6 +1588,12 @@ function setLang(lang) {
 
   // CV link
   document.getElementById('cv-link').href = lang === 'de' ? '/lebenslauf.pdf' : '/cv.pdf';
+
+  // Game elements
+  const gCmd = document.getElementById('g-cmd');
+  const gHint = document.getElementById('g-hint');
+  if (gCmd) gCmd.placeholder = i18n[lang].g_input_ph || '';
+  if (gHint && !window._gRunning) gHint.innerHTML = i18n[lang].g_hint_start || '';
 
   // Update submit button text if on last real step
   if (typeof updateNavLabels === 'function') updateNavLabels();
@@ -1473,6 +1829,237 @@ async function submitForm() {
 // Initial state
 updateProgress();
 updateNav();
+</script>
+
+<!-- ── Incident Commander engine ─────────────────────────────── -->
+<script>
+(function(){
+const G = id => document.getElementById(id);
+const pick = a => a[Math.floor(Math.random()*a.length)];
+const ri = (a,b) => a+Math.floor(Math.random()*(b-a+1));
+const p2 = n => String(n).padStart(2,'0');
+const ago = s => { const d=new Date(Date.now()-s*1000); return `${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}T${p2(d.getHours())}:${p2(d.getMinutes())}:${p2(d.getSeconds())}Z`; };
+const rId = () => Math.random().toString(36).slice(2,10);
+const rIp = () => `10.${ri(0,255)}.${ri(1,254)}.${ri(1,254)}`;
+const gt = k => i18n[currentLang]['g_'+k] || i18n.en['g_'+k] || k;
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+const SVC = {'api-gateway':{port:443,tech:'nginx/1.25',role:'reverse proxy'},'app-server':{port:8080,tech:'node:20-alpine',role:'main application'},'auth-service':{port:8081,tech:'node:20-alpine',role:'authentication'},'postgres':{port:5432,tech:'postgres:16',role:'primary database'},'redis':{port:6379,tech:'redis:7-alpine',role:'cache / sessions'},'worker':{port:9090,tech:'node:20-alpine',role:'background jobs'}};
+
+function hDb(){return[`[${ago(55)}]  LOG  checkpoint starting: time`,`[${ago(40)}]  LOG  checkpoint complete: wrote ${ri(200,800)} buffers`,`[${ago(20)}]  LOG  connection received: host=${rIp()}`,`[${ago(10)}]  LOG  duration: ${ri(2,45)}ms  statement: SELECT 1`]}
+function hRd(){return[`[${ago(60)}]  INFO  DB 0: ${ri(5000,20000)} keys, ${ri(50,200)}MB used`,`[${ago(30)}]  INFO  Background saving started`,`[${ago(25)}]  INFO  Background saving terminated with success`]}
+function hGw(){return[`[${ago(40)}]  INFO  ${rIp()} GET /api/health 200 ${ri(1,5)}ms`,`[${ago(25)}]  INFO  ${rIp()} GET /api/data 200 ${ri(20,100)}ms`]}
+function bSvc(d,rc){const m={};for(const[n,v]of Object.entries(d))m[n]={...v,isRoot:n===rc};return m}
+
+const SCENARIOS=[
+{id:'oom',sev:1,difficulty:[1,2],generate(){const tg=pick(['app-server','worker','auth-service']),tr=pick(['image processing','unbounded cache','CSV export of 2M rows','unoptimized query']);return{alert:tg+' pods restarting — OOMKilled',services:bSvc({[tg]:{status:'critical',cpu:ri(85,99),mem:ri(95,99),disk:ri(30,50),conns:ri(100,300)},'postgres':{status:'healthy',cpu:ri(20,40),mem:ri(40,60),disk:ri(50,70),conns:ri(30,80)},'redis':{status:'healthy',cpu:ri(5,15),mem:ri(20,40),disk:ri(10,20),conns:ri(50,200)},'api-gateway':{status:'degraded',cpu:ri(30,50),mem:ri(30,50),disk:ri(20,30),conns:ri(500,2000)}},tg),
+logs:{[tg]:[`[${ago(45)}] INFO  Starting ${tr}`,`[${ago(32)}] WARN  Memory usage at 87% (448Mi/512Mi)`,`[${ago(28)}] WARN  Memory usage at 94% (482Mi/512Mi)`,`[${ago(22)}] ERROR OOMKilled — exceeded 512Mi`,`[${ago(22)}] INFO  Pod ${tg}-${rId()} evicted`,`[${ago(12)}] WARN  Memory 91% after restart`,`[${ago(5)}]  ERROR OOMKilled again`,`[${ago(2)}]  WARN  CrashLoopBackOff`],'api-gateway':[`[${ago(22)}] WARN  upstream ${tg}:8080 — refused`,`[${ago(20)}] ERROR ${rIp()} POST /api/export 502`,`[${ago(8)}]  WARN  upstream ${tg}:8080 — refused`,`[${ago(3)}]  ERROR 5xx rate: 23%`],'postgres':hDb(),'redis':hRd()},
+traces:[`req-${rId()}  GET /api/data  gw→${tg} <span class="red">TIMEOUT 30s</span>`,`req-${rId()}  POST /api/export  gw→${tg} <span class="red">502</span>`,`req-${rId()}  GET /api/users  gw→${tg}→pg <span class="green">200 45ms</span>`],
+rootCause:tg,rootCauseDesc:`${tg} OOMKilled due to ${tr} exceeding 512Mi. CrashLoopBackOff.`,
+validFixes:[{cmd:'rollback',target:tg,score:1.0,desc:'Rolled back to stable version'},{cmd:'restart',target:tg,score:0.5,desc:'Restarted (temporary)'},{cmd:'scale',target:tg,score:0.7,desc:'Scaled to distribute memory'}],
+wrongFixes:[`The issue is ${tg}'s memory, not ${pick(['postgres','redis'])}.`]}}},
+
+{id:'disk',sev:1,difficulty:[1,2],generate(){const tg=pick(['postgres','app-server','worker']),cause=tg==='postgres'?'WAL logs not rotated':'debug logging left on';return{alert:tg+' — disk critical, writes failing',services:bSvc({[tg]:{status:'critical',cpu:ri(20,40),mem:ri(40,60),disk:ri(96,99),conns:ri(30,100)},'api-gateway':{status:tg==='postgres'?'degraded':'healthy',cpu:ri(20,40),mem:ri(30,50),disk:ri(20,35),conns:ri(300,1000)},'redis':{status:'healthy',cpu:ri(5,15),mem:ri(20,40),disk:ri(10,20),conns:ri(50,200)},'app-server':{status:tg==='postgres'?'degraded':'healthy',cpu:ri(15,35),mem:ri(30,55),disk:tg==='app-server'?ri(96,99):ri(25,40),conns:ri(50,200)}},tg),
+logs:{[tg]:tg==='postgres'?[`[${ago(90)}]  WARN  pg_wal: 48GB (threshold: 10GB)`,`[${ago(30)}]  ERROR No space left on device`,`[${ago(25)}]  PANIC terminated by signal 9`,`[${ago(10)}]  ERROR No space left on device`,`[${ago(3)}]   FATAL could not open WAL segment`]:[`[${ago(90)}]  INFO  /var/log/app/debug.log — 34GB`,`[${ago(60)}]  WARN  Disk 92%`,`[${ago(30)}]  WARN  Disk 97%`,`[${ago(15)}]  ERROR ENOSPC: no space left`,`[${ago(5)}]   ERROR Cannot write to filesystem`],'api-gateway':tg==='postgres'?[`[${ago(25)}] ERROR ${rIp()} POST /api/orders 500 — "db write failed"`,`[${ago(10)}] WARN  error rate 18%`]:hGw(),'redis':hRd()},
+traces:tg==='postgres'?[`req-${rId()} POST /api/orders gw→app→pg <span class="red">500 "disk full"</span>`,`req-${rId()} GET /api/users gw→app→redis <span class="green">200 12ms</span>`]:[`req-${rId()} POST /api/upload gw→${tg} <span class="red">500 ENOSPC</span>`],
+rootCause:tg,rootCauseDesc:`${tg} disk at 99% due to ${cause}. Writes failing.`,
+validFixes:[{cmd:'config',target:tg,score:1.0,desc:'Updated retention config',configKey:tg==='postgres'?'wal_keep_size':'log_max_size',configVal:tg==='postgres'?'2GB':'500MB'},{cmd:'rollback',target:tg,score:0.6,desc:'Rolled back'},{cmd:'restart',target:tg,score:0.4,desc:'Restarted (temp)'}],
+wrongFixes:[`Check ${tg}'s disk with \`metrics ${tg}\`.`]}}},
+
+{id:'connpool',sev:1,difficulty:[1,2,3],generate(){const lk=pick(['app-server','auth-service','worker']),mx=pick([100,200]);return{alert:lk+' — DB connections exhausted',services:bSvc({[lk]:{status:'critical',cpu:ri(60,80),mem:ri(50,70),disk:ri(30,50),conns:mx},'postgres':{status:'degraded',cpu:ri(70,95),mem:ri(60,80),disk:ri(40,65),conns:mx},'redis':{status:'healthy',cpu:ri(5,15),mem:ri(20,40),disk:ri(10,20),conns:ri(50,200)},'api-gateway':{status:'degraded',cpu:ri(30,50),mem:ri(30,50),disk:ri(20,30),conns:ri(800,2000)}},lk),
+logs:{[lk]:[`[${ago(60)}]  INFO  DB pool: ${mx-5}/${mx} active`,`[${ago(45)}]  WARN  DB pool: ${mx}/${mx} — waiting`,`[${ago(35)}]  ERROR ConnectionPool::acquire timeout 30s`,`[${ago(20)}]  WARN  ${ri(30,60)} requests queued`,`[${ago(5)}]   ERROR Pool exhausted (${mx}/${mx})`],'postgres':[`[${ago(45)}]  WARN  max_connections (${mx}) reached`,`[${ago(40)}]  LOG  FATAL: too many clients`,`[${ago(15)}]  WARN  ${ri(12,30)} attempts rejected`],'redis':hRd(),'api-gateway':[`[${ago(35)}] WARN  504 30002ms`,`[${ago(15)}] ERROR 5xx rate: ${ri(15,35)}%`]},
+traces:[`req-${rId()} GET /api/data gw→${lk}→pg <span class="red">TIMEOUT "pool exhausted"</span>`,`req-${rId()} GET /api/cached gw→${lk}→redis <span class="green">200 8ms</span>`],
+rootCause:lk,rootCauseDesc:`${lk} leaked DB connections — pool ${mx}/${mx}. Missing connection.release().`,
+validFixes:[{cmd:'rollback',target:lk,score:1.0,desc:'Rolled back — leak fixed'},{cmd:'restart',target:lk,score:0.6,desc:'Restarted — temp relief'},{cmd:'restart',target:'postgres',score:0.4,desc:'Restarted pg — connections dropped'},{cmd:'config',target:'postgres',score:0.5,desc:'Increased max_connections',configKey:'max_connections',configVal:String(mx*2)}],
+wrongFixes:[`Bottleneck is between ${lk} and postgres, not redis.`]}}},
+
+{id:'cert',sev:1,difficulty:[1],generate(){const tg=pick(['api-gateway','app-server','auth-service']);return{alert:'TLS handshake failures — "not secure"',services:bSvc({[tg]:{status:'critical',cpu:ri(10,25),mem:ri(20,40),disk:ri(20,40),conns:0},'postgres':{status:'healthy',cpu:ri(15,30),mem:ri(40,60),disk:ri(40,60),conns:ri(20,50)},'redis':{status:'healthy',cpu:ri(5,15),mem:ri(15,30),disk:ri(10,20),conns:ri(30,100)}},tg),
+logs:{[tg]:[`[${ago(30)}]  ERROR TLS handshake failed: certificate expired`,`[${ago(28)}]  ERROR x509: certificate expired`,`[${ago(20)}]  WARN  0 successful TLS in last 60s`,`[${ago(15)}]  ERROR cert expired at: ${new Date(Date.now()-86400000).toISOString()}`,`[${ago(5)}]   ERROR connections failing: cert expired 24h ago`],'postgres':hDb(),'redis':hRd()},
+traces:[`req-${rId()} GET / client→${tg} <span class="red">TLS_ERROR "cert expired"</span>`],
+rootCause:tg,rootCauseDesc:`${tg}'s TLS certificate expired 24h ago. All HTTPS fails.`,
+validFixes:[{cmd:'config',target:tg,score:1.0,desc:'Renewed cert and reloaded TLS',configKey:'tls_cert',configVal:'renew'},{cmd:'restart',target:tg,score:0.3,desc:'Restarted — cert still expired'}],
+wrongFixes:[`TLS cert issue on ${tg}. Check logs for "certificate expired".`]}}},
+
+{id:'baddeploy',sev:1,difficulty:[2,3],generate(){const tg=pick(['app-server','auth-service','worker']),ev=pick(['DATABASE_URL','REDIS_URL','API_SECRET','JWT_SECRET']);return{alert:tg+' crash loop after deploy — 100% errors',services:bSvc({[tg]:{status:'critical',cpu:ri(5,15),mem:ri(10,25),disk:ri(20,40),conns:0},'postgres':{status:'healthy',cpu:ri(15,30),mem:ri(40,55),disk:ri(40,60),conns:ri(10,30)},'redis':{status:'healthy',cpu:ri(5,15),mem:ri(15,30),disk:ri(10,20),conns:ri(20,80)},'api-gateway':{status:'degraded',cpu:ri(20,35),mem:ri(25,40),disk:ri(20,30),conns:ri(300,1000)}},tg),
+logs:{[tg]:[`[${ago(60)}]  INFO  Deploying ${tg}:v2.${ri(10,99)}.0 (${rId()})`,`[${ago(55)}]  INFO  Container starting...`,`[${ago(53)}]  ERROR Missing env var: ${ev}`,`[${ago(53)}]  ERROR Config validation failed: ${ev} undefined`,`[${ago(52)}]  FATAL Exit code 1`,`[${ago(45)}]  ERROR Missing env var: ${ev}`,`[${ago(30)}]  WARN  CrashLoopBackOff — backoff 1m`,`[${ago(5)}]   WARN  CrashLoopBackOff — 5 restarts`],'api-gateway':[`[${ago(50)}]  ERROR 502 — upstream refused`,`[${ago(30)}]  ERROR 5xx rate: 100%`,`[${ago(15)}]  WARN  no healthy upstreams`],'postgres':hDb(),'redis':hRd()},
+traces:[`req-${rId()} GET /api/data gw→${tg} <span class="red">502 no upstream</span>`],
+rootCause:tg,rootCauseDesc:`Deploy of ${tg} missing ${ev}. CrashLoopBackOff.`,
+validFixes:[{cmd:'rollback',target:tg,score:1.0,desc:`Rolled back — ${ev} was set before`},{cmd:'config',target:tg,score:0.9,desc:`Set ${ev} — recovered`,configKey:ev.toLowerCase(),configVal:'***'}],
+wrongFixes:[`${tg} crashes on startup — config issue. Read its logs.`]}}},
+
+{id:'stampede',sev:2,difficulty:[2,3],generate(){return{alert:'Response times degraded — cache miss rate spiking',services:bSvc({'redis':{status:'critical',cpu:ri(90,99),mem:ri(85,98),disk:ri(10,20),conns:ri(800,2000)},'app-server':{status:'degraded',cpu:ri(60,85),mem:ri(50,70),disk:ri(25,40),conns:ri(200,500)},'postgres':{status:'degraded',cpu:ri(80,98),mem:ri(70,85),disk:ri(40,60),conns:ri(80,200)},'api-gateway':{status:'degraded',cpu:ri(40,60),mem:ri(30,50),disk:ri(20,30),conns:ri(1000,3000)}},'redis'),
+logs:{'redis':[`[${ago(90)}]  WARN  evicting keys`,`[${ago(75)}]  WARN  ${ri(15000,30000)} keys evicted`,`[${ago(60)}]  WARN  Memory: ${ri(490,510)}MB / 512MB`,`[${ago(45)}]  ERROR OOM: used_memory > maxmemory`,`[${ago(5)}]   ERROR OOM command blocked`],'app-server':[`[${ago(80)}]  WARN  Cache miss: 68% (normal 5%)`,`[${ago(60)}]  WARN  Cache miss: 89%`,`[${ago(40)}]  WARN  Falling back to DB`,`[${ago(10)}]  WARN  Queue depth: ${ri(200,500)}`],'postgres':[`[${ago(55)}]  WARN  query load 5x normal`,`[${ago(40)}]  LOG  slow query: ${ri(2000,8000)}ms`,`[${ago(10)}]  WARN  connections: ${ri(150,200)}/200`],'api-gateway':[`[${ago(60)}]  WARN  avg response: ${ri(2000,5000)}ms (SLA: 500ms)`,`[${ago(10)}]  WARN  5xx: ${ri(5,15)}%`]},
+traces:[`req-${rId()} GET /products gw→app→<span class="red">redis MISS</span>→pg <span class="yellow">${ri(2000,5000)}ms</span>`,`req-${rId()} GET /user gw→app→<span class="red">redis OOM</span>→pg <span class="yellow">${ri(3000,8000)}ms</span>`],
+rootCause:'redis',rootCauseDesc:'Redis hit 512MB limit — evicting keys. Cache stampede overloading postgres.',
+validFixes:[{cmd:'config',target:'redis',score:1.0,desc:'Increased maxmemory — fixed',configKey:'maxmemory',configVal:'2GB'},{cmd:'flush',target:'redis',score:0.5,desc:'Flushed (rebuilding)'},{cmd:'restart',target:'redis',score:0.4,desc:'Restarted (temp)'}],
+wrongFixes:['Fix redis first, not postgres.']}}},
+
+{id:'dns',sev:1,difficulty:[2,3],generate(){const tg=pick(['app-server','auth-service']),dep=pick(['postgres','redis']),host=dep==='postgres'?'db.internal.prod.local':'cache.internal.prod.local';return{alert:tg+' cannot reach '+dep+' — DNS failing',services:bSvc({[tg]:{status:'critical',cpu:ri(10,20),mem:ri(30,50),disk:ri(20,40),conns:0},[dep]:{status:'healthy',cpu:ri(15,30),mem:ri(40,60),disk:ri(30,55),conns:ri(5,20)},'api-gateway':{status:'degraded',cpu:ri(20,35),mem:ri(25,40),disk:ri(20,30),conns:ri(400,1200)}},tg),
+logs:{[tg]:[`[${ago(55)}]  INFO  Connecting to ${host}:${SVC[dep].port}...`,`[${ago(50)}]  ERROR ENOTFOUND ${host}`,`[${ago(45)}]  ERROR DNS NXDOMAIN ${host}`,`[${ago(25)}]  ERROR ENOTFOUND ${host}`,`[${ago(8)}]   ERROR Cannot reach ${dep}`],[dep]:[`[${ago(60)}]  LOG  listening on ${SVC[dep].port}`,`[${ago(30)}]  LOG  accepting connections`,`[${ago(10)}]  LOG  0 active clients (unusual)`],'api-gateway':[`[${ago(45)}]  ERROR 500 — "${dep} connection failed"`,`[${ago(10)}]  WARN  error rate: ${ri(40,80)}%`]},
+traces:[`req-${rId()} GET /api/data gw→${tg}→<span class="red">DNS FAIL ${host}</span>`],
+rootCause:tg,rootCauseDesc:`DNS for ${host} misconfigured. ${tg} can't resolve it. ${dep} is healthy.`,
+validFixes:[{cmd:'config',target:tg,score:1.0,desc:`Fixed DNS endpoint`,configKey:`${dep}_host`,configVal:dep==='postgres'?'10.0.1.50':'10.0.1.51'},{cmd:'rollback',target:tg,score:0.8,desc:'Rolled back to correct DNS'},{cmd:'restart',target:tg,score:0.1,desc:'Restarted — DNS still broken'}],
+wrongFixes:[`${dep} is healthy. ${tg} can't resolve its hostname.`]}}}
+];
+
+// ── State ──
+let g={round:0,total:0,scores:[],sc:null,timer:0,tI:null,users:0,uI:null,cmds:0,fixes:0,done:false,hist:[],hIdx:-1};
+const TIMES=[150,120,90],ROUNDS=3;
+window._gRunning=false;
+
+function gStartGame(){
+  g={round:0,total:0,scores:[],sc:null,timer:0,tI:null,users:0,uI:null,cmds:0,fixes:0,done:false,hist:[],hIdx:-1};
+  gShow('g-game');gStartRound();
+  // Scroll game into view
+  document.querySelector('.game-section').scrollIntoView({behavior:'smooth',block:'start'});
+}
+window.gStartGame=gStartGame;
+
+function gStartRound(){
+  window._gRunning=true;
+  const used=g.scores.map(r=>r.id);
+  const avail=SCENARIOS.filter(s=>!used.includes(s.id)&&s.difficulty.includes(g.round+1));
+  const tmpl=avail.length?pick(avail):pick(SCENARIOS);
+  const sc=tmpl.generate();sc.id=tmpl.id;sc.sev=tmpl.sev;
+  g.sc=sc;g.cmds=0;g.fixes=0;g.done=false;g.users=0;g.hist=[];g.hIdx=-1;
+
+  G('g-sev').textContent=`SEV-${sc.sev}`;G('g-sev').className=`g-alert-sev${sc.sev===1?'':' sev2'}`;
+  G('g-msg').textContent=sc.alert;G('g-time').textContent=ago(0).replace('T',' ').replace('Z','');
+  G('g-round').textContent=`${g.round+1}/${ROUNDS}`;G('g-cmds').textContent='0';G('g-users').textContent='0';
+  G('g-term').innerHTML='';G('g-hint').innerHTML=gt('hint_start');
+  G('g-pbar').style.width=Math.round(g.round/ROUNDS*100)+'%';
+
+  G('g-svc-list').innerHTML=Object.entries(sc.services).map(([n,s])=>{
+    const c=s.status==='healthy'?'ok':s.status==='degraded'?'warn':'crit';
+    return`<div class="g-svc-row"><span class="g-svc-dot ${c}"></span><span class="g-svc-name">${n}</span><span class="g-svc-status">${s.status}</span></div>`;
+  }).join('');
+
+  g.timer=TIMES[g.round]||120;gUpdateTimer();
+  clearInterval(g.tI);g.tI=setInterval(()=>{g.timer--;gUpdateTimer();if(g.timer<=0){clearInterval(g.tI);clearInterval(g.uI);gTimeUp();}},1000);
+  clearInterval(g.uI);g.uI=setInterval(()=>{if(!g.done){g.users+=ri(5,30+g.round*15);G('g-users').textContent=g.users.toLocaleString();}},2000);
+
+  gPrint(`<span class="yellow">\u26a0 ${gt('alert')}: ${esc(sc.alert)}</span>`);
+  gPrint(`<span class="dim">${gt('help')}</span>`);gPrint('');
+  G('g-cmd').value='';G('g-cmd').focus();
+}
+
+function gUpdateTimer(){const m=Math.floor(g.timer/60),s=g.timer%60,el=G('g-timer');el.textContent=`${m}:${p2(s)}`;el.className='g-stat-val'+(g.timer<=30?' red':g.timer<=60?' yellow':'');}
+
+function gPrint(h,c=''){const d=document.createElement('div');d.className='t-line'+(c?' '+c:'');d.innerHTML=h;G('g-term').appendChild(d);G('g-term').scrollTop=G('g-term').scrollHeight;}
+
+function gMetric(label,val){const fl=Math.round(val/100*20),em=20-fl,cl=val>=90?'red':val>=70?'yellow':'green';gPrint(`  ${label.padEnd(10)} <span class="${cl}">${'\u2588'.repeat(fl)}</span><span class="dim">${'\u2591'.repeat(em)}</span> <span class="${cl}">${String(val).padStart(3)}%</span>`);}
+
+G('g-cmd').addEventListener('keydown',e=>{
+  if(e.key==='Enter'){const r=G('g-cmd').value.trim();G('g-cmd').value='';if(!r)return;g.hist.push(r);g.hIdx=g.hist.length;gProcess(r);}
+  else if(e.key==='ArrowUp'){e.preventDefault();if(g.hIdx>0){g.hIdx--;G('g-cmd').value=g.hist[g.hIdx];}}
+  else if(e.key==='ArrowDown'){e.preventDefault();if(g.hIdx<g.hist.length-1){g.hIdx++;G('g-cmd').value=g.hist[g.hIdx];}else{g.hIdx=g.hist.length;G('g-cmd').value='';}}
+  else if(e.key==='Tab'){e.preventDefault();const v=G('g-cmd').value.split(/\s+/);if(v.length>=2){const p=v[v.length-1].toLowerCase(),m=Object.keys(g.sc.services).find(s=>s.startsWith(p));if(m){v[v.length-1]=m;G('g-cmd').value=v.join(' ');}}}
+});
+
+function gProcess(raw){
+  if(g.done){gPrint(gt('resolved')+'...','dim');return;}
+  gPrint(esc(raw),'cmd');g.cmds++;G('g-cmds').textContent=g.cmds;
+  const p=raw.trim().split(/\s+/),cmd=p[0].toLowerCase(),a1=p[1]?.toLowerCase(),a2=p[2],a3=p[3],sc=g.sc;
+
+  switch(cmd){
+    case'help':gPrint('');
+      gPrint(`<span class="bright">\u2500\u2500 ${gt('h_inv')} \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500</span>`);
+      gPrint(`  <span class="cyan">status</span>            ${gt('h_status')}`);gPrint(`  <span class="cyan">logs &lt;svc&gt;</span>    ${gt('h_logs')}`);
+      gPrint(`  <span class="cyan">metrics &lt;svc&gt;</span> ${gt('h_metrics')}`);gPrint(`  <span class="cyan">describe &lt;svc&gt;</span>   ${gt('h_describe')}`);
+      gPrint(`  <span class="cyan">trace</span>             ${gt('h_trace')}`);gPrint('');
+      gPrint(`<span class="bright">\u2500\u2500 ${gt('h_act')} \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500</span>`);
+      gPrint(`  <span class="cyan">restart &lt;svc&gt;</span>   ${gt('h_restart')}`);gPrint(`  <span class="cyan">rollback &lt;svc&gt;</span>  ${gt('h_rollback')}`);
+      gPrint(`  <span class="cyan">scale &lt;svc&gt; &lt;n&gt;</span> ${gt('h_scale')}`);gPrint(`  <span class="cyan">config &lt;s&gt; &lt;k&gt; &lt;v&gt;</span> ${gt('h_config')}`);
+      gPrint(`  <span class="cyan">flush &lt;svc&gt;</span>     ${gt('h_flush')}`);gPrint('');
+      gPrint(`  <span class="cyan">clear</span>             ${gt('h_clear')}`);gPrint('');break;
+    case'status':gPrint('');gPrint('<span class="bright">SERVICE          STATUS     CPU   MEM   DISK  CONNS</span>');
+      gPrint('<span class="dim">\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500  \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500  \u2500\u2500\u2500\u2500  \u2500\u2500\u2500\u2500  \u2500\u2500\u2500\u2500  \u2500\u2500\u2500\u2500\u2500</span>');
+      for(const[n,s]of Object.entries(sc.services)){const c=s.status==='healthy'?'green':s.status==='degraded'?'yellow':'red';gPrint(`  ${n.padEnd(15)} <span class="${c}">${s.status.padEnd(9)}</span>  ${String(s.cpu).padStart(3)}%  ${String(s.mem).padStart(3)}%  ${String(s.disk).padStart(3)}%  ${String(s.conns).padStart(5)}`);}
+      gPrint('');break;
+    case'logs':if(!a1){gPrint(`${gt('usage')}: logs <service>`,'err');break;}if(!sc.services[a1]&&!sc.logs[a1]){gPrint(`${gt('unknown')}: ${esc(a1)}`,'err');gPrint(`${gt('avail')}: ${Object.keys(sc.services).join(', ')}`,'dim');break;}
+      if(!sc.logs[a1]||!sc.logs[a1].length){gPrint(`${gt('no_logs')} ${a1}`,'dim');break;}
+      gPrint(`<span class="dim">\u2500\u2500 logs: ${a1} \u2500\u2500</span>`);sc.logs[a1].forEach(l=>{const c=/ERROR|FATAL|PANIC/.test(l)?'err':/WARN/.test(l)?'warn':/INFO/.test(l)?'info':'';gPrint(l,c);});gPrint('');break;
+    case'metrics':if(!a1){gPrint(`${gt('usage')}: metrics <svc>`,'err');break;}if(!sc.services[a1]){gPrint(`${gt('unknown')}: ${esc(a1)}`,'err');break;}
+      const m=sc.services[a1];gPrint(`<span class="dim">\u2500\u2500 metrics: ${a1} \u2500\u2500</span>`);gPrint('');gMetric('CPU',m.cpu);gMetric('Memory',m.mem);gMetric('Disk',m.disk);gPrint(`  Connections  ${m.conns}`);gPrint('');break;
+    case'describe':if(!a1){gPrint(`${gt('usage')}: describe <svc>`,'err');break;}if(!sc.services[a1]){gPrint(`${gt('unknown')}: ${esc(a1)}`,'err');break;}
+      const sv=SVC[a1]||{port:'?',tech:'?',role:'?'},si=sc.services[a1];
+      gPrint(`<span class="dim">\u2500\u2500 ${a1} \u2500\u2500</span>`);gPrint(`  Image:  ${sv.tech}`);gPrint(`  Role:   ${sv.role}`);gPrint(`  Port:   ${sv.port}`);
+      gPrint(`  Status: <span class="${si.status==='healthy'?'green':si.status==='degraded'?'yellow':'red'}">${si.status}</span>`);gPrint('');break;
+    case'trace':gPrint('<span class="dim">\u2500\u2500 traces \u2500\u2500</span>');if(sc.traces)sc.traces.forEach(t=>gPrint('  '+t));gPrint('');break;
+    case'restart':case'rollback':case'scale':case'flush':case'config':gFix(cmd,a1,a2,a3);break;
+    case'clear':G('g-term').innerHTML='';break;
+    default:gPrint(`${gt('not_found')}: ${esc(cmd)}. ${gt('help')}`,'err');
+  }
+}
+
+function gFix(cmd,tgt,a2,a3){
+  const sc=g.sc;if(!tgt){gPrint(`${gt('usage')}: ${cmd} <service>`,'err');return;}
+  if(!sc.services[tgt]){gPrint(`${gt('unknown')}: ${esc(tgt)}`,'err');return;}
+  g.fixes++;gPrint('');
+  const vf=sc.validFixes.find(f=>{if(f.cmd!==cmd||f.target!==tgt)return false;if(cmd==='config'&&f.configKey&&a2?.toLowerCase()!==f.configKey.toLowerCase())return false;return true;});
+  if(vf&&vf.score>0.3){
+    gPrint(`<span class="yellow">${gt('applying')} ${cmd} on ${tgt}...</span>`);
+    setTimeout(()=>{gPrint(`<span class="green">\u2713 ${vf.desc}</span>`);gPrint('');
+      sc.services[tgt].status='healthy';for(const[,s]of Object.entries(sc.services))if(s.status==='degraded')s.status='healthy';
+      G('g-svc-list').innerHTML=Object.entries(sc.services).map(([n,s])=>{const c=s.status==='healthy'?'ok':s.status==='degraded'?'warn':'crit';return`<div class="g-svc-row"><span class="g-svc-dot ${c}"></span><span class="g-svc-name">${n}</span><span class="g-svc-status">${s.status}</span></div>`;}).join('');
+      gPrint(`<span class="green">\u2713 ${gt('resolved')} \u2014 ${gt('root')}: ${esc(sc.rootCauseDesc)}</span>`);gPrint('');
+      g.done=true;clearInterval(g.tI);clearInterval(g.uI);G('g-pbar').style.width=Math.round((g.round+1)/ROUNDS*100)+'%';
+      setTimeout(()=>gShowResults(vf.score),1500);
+    },1200);
+  } else {
+    gPrint(`<span class="yellow">${gt('applying')} ${cmd} on ${tgt}...</span>`);
+    setTimeout(()=>{if(vf&&vf.score<=0.3)gPrint(`<span class="orange">\u26a0 ${vf.desc}</span>`);
+      else{gPrint(`<span class="red">\u2717 ${cmd} ${tgt} \u2014 ${gt('no_effect')}</span>`);if(sc.wrongFixes.length)gPrint(`<span class="dim">  ${gt('hint_pfx')}: ${sc.wrongFixes[0]}</span>`);}gPrint('');},800);
+  }
+}
+
+function gShowResults(fq){
+  const mx=TIMES[g.round]||120,tu=mx-g.timer;
+  const tb=Math.round(g.timer/mx*500),eb=Math.max(0,300-g.cmds*15),fb=Math.round(fq*500),ft=g.fixes===1?200:0,up=Math.min(300,Math.round(g.users/50));
+  const tot=Math.max(0,500+tb+eb+fb+ft-up);
+  const gr=tot>=1400?'S':tot>=1100?'A':tot>=800?'B':tot>=500?'C':'D';
+  g.scores.push({id:g.sc.id,score:tot,grade:gr,time:tu,cmds:g.cmds,users:g.users});
+  g.total+=tot;G('g-score').textContent=g.total.toLocaleString();
+  const last=g.round>=ROUNDS-1;
+  G('g-rcard').innerHTML=`<div class="g-grade ${gr.toLowerCase()}">${gr}</div><div class="g-results-label">${gt('r_round')} ${g.round+1} — ${esc(g.sc.rootCause)}</div><div class="g-results-score">${tot.toLocaleString()} pts</div>
+    <div class="g-breakdown"><div class="g-rb-row"><span class="g-rb-label">${gt('r_base')}</span><span class="g-rb-val">500</span></div>
+    <div class="g-rb-row"><span class="g-rb-label">${gt('r_time')} (${tu}s ${gt('r_used')})</span><span class="g-rb-val green">+${tb}</span></div>
+    <div class="g-rb-row"><span class="g-rb-label">${gt('r_eff')} (${g.cmds} ${gt('r_cmds')})</span><span class="g-rb-val green">+${eb}</span></div>
+    <div class="g-rb-row"><span class="g-rb-label">${gt('r_fix')} (${Math.round(fq*100)}%)</span><span class="g-rb-val ${fq>=0.8?'green':'yellow'}">+${fb}</span></div>
+    ${ft?`<div class="g-rb-row"><span class="g-rb-label">${gt('r_first')}</span><span class="g-rb-val green">+${ft}</span></div>`:''}
+    <div class="g-rb-row"><span class="g-rb-label">${gt('r_impact')} (${g.users.toLocaleString()} ${gt('r_affected')})</span><span class="g-rb-val red">-${up}</span></div></div>
+    <div class="g-results-desc">${esc(g.sc.rootCauseDesc)}</div>`;
+  G('g-next').textContent=last?gt('r_final'):`${gt('r_next')} \u2192`;
+  gShow('g-results');
+}
+
+function gTimeUp(){
+  g.done=true;gPrint('');gPrint(`<span class="red">\u23f0 ${gt('timeup')}</span>`);gPrint(`<span class="dim">${gt('root_was')}: ${esc(g.sc.rootCauseDesc)}</span>`);
+  g.scores.push({id:g.sc.id,score:0,grade:'D',time:TIMES[g.round],cmds:g.cmds,users:g.users});
+  setTimeout(()=>{G('g-rcard').innerHTML=`<div class="g-grade d">D</div><div class="g-results-label">${gt('r_round')} ${g.round+1} — ${gt('r_expired')}</div><div class="g-results-score">0 pts</div><div class="g-results-desc">${esc(g.sc.rootCauseDesc)}</div>`;
+    G('g-next').textContent=g.round>=ROUNDS-1?gt('r_final'):`${gt('r_next')} \u2192`;gShow('g-results');},2000);
+}
+
+function gNextRound(){g.round++;if(g.round>=ROUNDS)gFinalResults();else{gShow('g-game');gStartRound();}}
+window.gNextRound=gNextRound;
+
+function gFinalResults(){
+  const tot=g.total,gr=tot>=4200?'S':tot>=3300?'A':tot>=2400?'B':tot>=1500?'C':'D';
+  const title=gt('grade_'+gr.toLowerCase());
+  const cards=g.scores.map((r,i)=>`<div class="g-fr-card"><div class="g-fr-num">${gt('r_round')} ${i+1}</div><div class="g-fr-name">${esc(r.id)}</div><div class="g-fr-score">${r.score.toLocaleString()}</div><div class="g-fr-time">${r.time}s \u00b7 ${r.cmds} ${gt('r_cmds')}</div></div>`).join('');
+  G('g-rcard').innerHTML=`<div class="g-grade ${gr.toLowerCase()}">${gr}</div><div class="g-results-label">${title}</div><div class="g-results-score">${tot.toLocaleString()} pts</div><div class="g-final-rounds">${cards}</div>`;
+  G('g-next').textContent=gt('r_again');G('g-next').onclick=()=>{gShow('g-title');window._gRunning=false;};
+  gShow('g-results');
+}
+
+function gShow(id){document.querySelectorAll('.g-screen').forEach(s=>s.classList.remove('active'));G(id).classList.add('active');if(id==='g-game')G('g-cmd').focus();}
+
+// Click to focus terminal
+document.addEventListener('click',e=>{if(e.target.closest('.g-term-wrap')||e.target.closest('.g-input-row'))G('g-cmd').focus();});
+
+// Init placeholder
+G('g-cmd').placeholder=gt('input_ph');G('g-hint').innerHTML=gt('hint_start');
+})();
 </script>
 
 <!-- ── Bunny animation engine ──────────────────────────────────── -->
