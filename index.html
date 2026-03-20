@@ -153,7 +153,7 @@
     transform-origin: center center;
   }
 
-  /* ── Center column — typeform ─────────────────────────────────── */
+  /* ── Center column — form ─────────────────────────────────────── */
   .col-center {
     display: flex;
     flex-direction: column;
@@ -170,24 +170,358 @@
     display: flex;
     flex-direction: column;
     transition: background 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
   }
 
-  /* Keep form card light in dark mode — Typeform content isn't theme-aware */
-  [data-theme="dark"] .form-card {
-    background: #FFFFFF;
-  }
-
-  .form-card [data-tf-live] {
+  /* ── Multi-step form ──────────────────────────────────────────── */
+  .hs-form {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 48px 40px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hs-steps {
+    flex: 1;
+    position: relative;
+  }
+
+  .hs-step {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    transform: translateX(40px);
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+
+  .hs-step.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .hs-step.exit-left {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+
+  .hs-step-num {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 10px;
+  }
+
+  .hs-step-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.35;
+    margin-bottom: 28px;
+    color: var(--text);
+  }
+
+  /* Role picker cards */
+  .role-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .role-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    border-radius: 12px;
+    border: 1.5px solid rgba(42, 31, 61, 0.1);
+    background: var(--link-bg);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+
+  .role-card:hover {
+    border-color: rgba(42, 31, 61, 0.2);
+    background: var(--link-bg-hover);
+    transform: translateX(3px);
+  }
+
+  .role-card.selected {
+    border-color: var(--accent-purple);
+    background: rgba(192, 174, 237, 0.1);
+  }
+
+  .role-card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .role-card-icon.guest    { background: rgba(237, 170, 178, 0.2); }
+  .role-card-icon.hr       { background: rgba(192, 174, 237, 0.2); }
+  .role-card-icon.customer { background: rgba(158, 196, 158, 0.2); }
+
+  .role-card-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .role-card-label {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  .role-card-hint {
+    font-size: 12px;
+    color: var(--text-soft);
+    font-weight: 300;
+  }
+
+  /* Keyboard shortcut badge */
+  .role-key {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-soft);
+    background: var(--link-bg);
+    border: 1px solid rgba(42, 31, 61, 0.08);
+    border-radius: 5px;
+    padding: 2px 7px;
+    flex-shrink: 0;
+  }
+
+  /* Form fields */
+  .field-group {
+    margin-bottom: 18px;
+  }
+
+  .field-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .field-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-soft);
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+  }
+
+  .field-input,
+  .field-textarea,
+  .field-select {
     width: 100%;
-    min-height: 0;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1.5px solid rgba(42, 31, 61, 0.12);
+    background: var(--link-bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
   }
 
-  /* Ensure typeform iframe fills container */
-  .form-card iframe {
-    flex: 1;
-    width: 100% !important;
-    height: 100% !important;
+  .field-input::placeholder,
+  .field-textarea::placeholder {
+    color: var(--text-soft);
+    opacity: 0.6;
+  }
+
+  .field-input:focus,
+  .field-textarea:focus,
+  .field-select:focus {
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 0 3px rgba(192, 174, 237, 0.15);
+  }
+
+  .field-textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .field-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B5F7B' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+
+  /* Nav row */
+  .hs-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    margin-top: auto;
+  }
+
+  .hs-back {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: var(--text-soft);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .hs-back:hover {
+    color: var(--text);
+    background: var(--link-bg);
+  }
+
+  .hs-back svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .hs-back.hidden {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .hs-next {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    border-radius: 10px;
+    border: none;
+    background: var(--text);
+    color: var(--card);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .hs-next:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(42, 31, 61, 0.15);
+  }
+
+  .hs-next:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .hs-next svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.2s ease;
+  }
+
+  .hs-next:hover:not(:disabled) svg {
+    transform: translateX(2px);
+  }
+
+  /* Progress bar */
+  .hs-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(42, 31, 61, 0.06);
+    border-radius: 0 0 2px 2px;
+    overflow: hidden;
+  }
+
+  .hs-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-purple), var(--accent-beige));
+    border-radius: 2px;
+    transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Thank you screen */
+  .hs-done {
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .hs-done-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(158, 196, 158, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 26px;
+  }
+
+  .hs-done-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+
+  .hs-done-sub {
+    font-size: 14px;
+    color: var(--text-soft);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  /* Sending state */
+  .hs-next.sending {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+
+  /* Error message */
+  .hs-error {
+    font-size: 12px;
+    color: #c45;
+    margin-top: 8px;
+    min-height: 18px;
   }
 
   /* ── Right column — links & CV ────────────────────────────────── */
@@ -505,12 +839,15 @@
       padding-top: 0;
     }
     .cv-card, .links-card { flex: 1; }
+    .role-key { display: none; }
   }
 
   @media (max-width: 600px) {
     body { padding: 12px; }
     .page { gap: 12px; }
     .col-right { flex-direction: column; }
+    .hs-form { padding: 36px 24px 24px; }
+    .hs-step-title { font-size: 19px; }
   }
 </style>
 </head>
@@ -556,11 +893,135 @@
     </div>
   </div>
 
-  <!-- ══ Center column: Typeform ══ -->
+  <!-- ══ Center column: Custom form ══ -->
   <div class="col-center">
     <div class="form-card" id="form-card">
-      <div id="tf-en" data-tf-live="01KM4N4645514PFXY148KKEAEF" data-tf-opacity="0"></div>
-      <div id="tf-de" data-tf-live="01KM4SWAE0RAXT5GKR8JYP4N6A" data-tf-opacity="0" style="display:none"></div>
+      <div class="hs-progress"><div class="hs-progress-bar" id="progress-bar" style="width:0%"></div></div>
+
+      <div class="hs-form" id="hs-form">
+        <div class="hs-steps" id="hs-steps">
+
+          <!-- Step 0: Role picker -->
+          <div class="hs-step active" data-step="0">
+            <div class="hs-step-num" data-i18n="stepWelcome">Welcome</div>
+            <div class="hs-step-title" data-i18n="q_role">Welcome to Harestack! You are a&hellip;</div>
+            <div class="role-cards">
+              <div class="role-card" data-role="guest" tabindex="0">
+                <div class="role-card-icon guest">&#128075;</div>
+                <div class="role-card-text">
+                  <div class="role-card-label" data-i18n="role_guest">Guest</div>
+                  <div class="role-card-hint" data-i18n="role_guest_hint">Just browsing or have a question</div>
+                </div>
+                <span class="role-key">1</span>
+              </div>
+              <div class="role-card" data-role="hr" tabindex="0">
+                <div class="role-card-icon hr">&#128188;</div>
+                <div class="role-card-text">
+                  <div class="role-card-label" data-i18n="role_hr">HR Agent / Recruiter</div>
+                  <div class="role-card-hint" data-i18n="role_hr_hint">Looking to hire</div>
+                </div>
+                <span class="role-key">2</span>
+              </div>
+              <div class="role-card" data-role="customer" tabindex="0">
+                <div class="role-card-icon customer">&#128640;</div>
+                <div class="role-card-text">
+                  <div class="role-card-label" data-i18n="role_customer">Customer</div>
+                  <div class="role-card-hint" data-i18n="role_customer_hint">Have a project in mind</div>
+                </div>
+                <span class="role-key">3</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 1a: Guest details -->
+          <div class="hs-step" data-step="1" data-branch="guest">
+            <div class="hs-step-num" data-i18n="stepDetails">Details</div>
+            <div class="hs-step-title" data-i18n="q_guest">What brings you here?</div>
+            <div class="field-group">
+              <textarea class="field-textarea" id="f-guest-msg" rows="4" data-i18n-ph="ph_guest" placeholder="Your message&hellip;"></textarea>
+            </div>
+          </div>
+
+          <!-- Step 1b: HR / Recruiter details -->
+          <div class="hs-step" data-step="1" data-branch="hr">
+            <div class="hs-step-num" data-i18n="stepDetails">Details</div>
+            <div class="hs-step-title" data-i18n="q_hr">Tell me about the role</div>
+            <div class="field-group">
+              <label class="field-label" data-i18n="lbl_company">Company name</label>
+              <input class="field-input" type="text" id="f-hr-company" data-i18n-ph="ph_company" placeholder="Acme Corp">
+            </div>
+            <div class="field-group">
+              <label class="field-label" data-i18n="lbl_role">Role you&#39;re hiring for</label>
+              <input class="field-input" type="text" id="f-hr-role" data-i18n-ph="ph_role" placeholder="Senior Backend Engineer">
+            </div>
+            <div class="field-group">
+              <label class="field-label" data-i18n="lbl_jd">Job description or link</label>
+              <textarea class="field-textarea" id="f-hr-jd" rows="3" data-i18n-ph="ph_jd" placeholder="Paste JD or URL&hellip;"></textarea>
+            </div>
+          </div>
+
+          <!-- Step 1c: Customer details -->
+          <div class="hs-step" data-step="1" data-branch="customer">
+            <div class="hs-step-num" data-i18n="stepDetails">Details</div>
+            <div class="hs-step-title" data-i18n="q_customer">Tell me about your project</div>
+            <div class="field-group">
+              <textarea class="field-textarea" id="f-cust-project" rows="4" data-i18n-ph="ph_project" placeholder="Describe your project&hellip;"></textarea>
+            </div>
+            <div class="field-group">
+              <label class="field-label" data-i18n="lbl_budget">Budget range</label>
+              <select class="field-select" id="f-cust-budget">
+                <option value="" data-i18n="opt_select">Select&hellip;</option>
+                <option value="<5k">&lt; &euro;5,000</option>
+                <option value="5k-15k">&euro;5,000 &ndash; &euro;15,000</option>
+                <option value="15k-50k">&euro;15,000 &ndash; &euro;50,000</option>
+                <option value="50k+">&euro;50,000+</option>
+                <option value="unsure" data-i18n="opt_unsure">Not sure yet</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Step 2: Contact info (all paths) -->
+          <div class="hs-step" data-step="2">
+            <div class="hs-step-num" data-i18n="stepContact">Contact</div>
+            <div class="hs-step-title" data-i18n="q_contact">How can I reach you?</div>
+            <div class="field-group">
+              <label class="field-label" data-i18n="lbl_email">Your email</label>
+              <input class="field-input" type="email" id="f-email" data-i18n-ph="ph_email" placeholder="you@example.com">
+            </div>
+            <div class="field-group">
+              <label class="field-label" data-i18n="lbl_name">Your name</label>
+              <input class="field-input" type="text" id="f-name" data-i18n-ph="ph_name" placeholder="Jane Doe">
+            </div>
+            <div class="hs-error" id="form-error"></div>
+          </div>
+
+          <!-- Step 3: Done -->
+          <div class="hs-step" data-step="3">
+            <div class="hs-done">
+              <div class="hs-done-icon">&#10024;</div>
+              <div class="hs-done-title" data-i18n="done_title">Thanks!</div>
+              <div class="hs-done-sub" data-i18n="done_sub">I&#39;ll get back to you shortly.</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Navigation -->
+        <div class="hs-nav" id="hs-nav">
+          <button class="hs-back hidden" id="btn-back" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+            <span data-i18n="nav_back">Back</span>
+          </button>
+          <button class="hs-next" id="btn-next" type="button" disabled>
+            <span data-i18n="nav_next">Continue</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -605,7 +1066,7 @@
           </a>
         </li>
         <li>
-          <a id="email-link" href="/cdn-cgi/l/email-protection#573f323b3b38717461636c39323e36793025382227" class="link-item">
+          <a id="email-link" href="mailto:hello@neia.group" class="link-item">
             <div class="link-icon em">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="2" y="4" width="20" height="16" rx="2"/>
@@ -629,18 +1090,94 @@
   &copy; 2026 &middot; <a href="https://neia.group">NEIA</a>
 </footer>
 
-<!-- ── Typeform embed SDK ───────────────────────────────────────── -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="//embed.typeform.com/next/embed.js"></script>
-
-<!-- ── Theme + Language toggles ─────────────────────────────────── -->
+<!-- ── Theme + Language + Form logic ────────────────────────────── -->
 <script>
-// ── i18n strings ──────────────────────────────────────────────────────────
+// ── i18n ──────────────────────────────────────────────────────────
 const i18n = {
-  en: { cv: 'R\u00e9sum\u00e9', cvBtn: 'Download PDF', connect: 'Connect' },
-  de: { cv: 'Lebenslauf', cvBtn: 'PDF herunterladen', connect: 'Kontakt' }
+  en: {
+    cv: 'R\u00e9sum\u00e9', cvBtn: 'Download PDF', connect: 'Connect',
+    // Form strings
+    stepWelcome: 'Welcome',
+    stepDetails: 'Details',
+    stepContact: 'Contact',
+    q_role: 'Welcome to Harestack! You are a\u2026',
+    role_guest: 'Guest',
+    role_guest_hint: 'Just browsing or have a question',
+    role_hr: 'HR Agent / Recruiter',
+    role_hr_hint: 'Looking to hire',
+    role_customer: 'Customer',
+    role_customer_hint: 'Have a project in mind',
+    q_guest: 'What brings you here?',
+    q_hr: 'Tell me about the role',
+    q_customer: 'Tell me about your project',
+    q_contact: 'How can I reach you?',
+    lbl_company: 'Company name',
+    lbl_role: 'Role you\'re hiring for',
+    lbl_jd: 'Job description or link',
+    lbl_budget: 'Budget range',
+    lbl_email: 'Your email',
+    lbl_name: 'Your name',
+    ph_guest: 'Your message\u2026',
+    ph_company: 'Acme Corp',
+    ph_role: 'Senior Backend Engineer',
+    ph_jd: 'Paste JD or URL\u2026',
+    ph_project: 'Describe your project\u2026',
+    ph_email: 'you@example.com',
+    ph_name: 'Jane Doe',
+    opt_select: 'Select\u2026',
+    opt_unsure: 'Not sure yet',
+    nav_back: 'Back',
+    nav_next: 'Continue',
+    nav_send: 'Send',
+    done_title: 'Thanks!',
+    done_sub: 'I\u2019ll get back to you shortly.',
+    err_email: 'Please enter a valid email.',
+    err_required: 'Please fill in all fields.',
+    err_send: 'Something went wrong. Try again or email me directly.',
+  },
+  de: {
+    cv: 'Lebenslauf', cvBtn: 'PDF herunterladen', connect: 'Kontakt',
+    stepWelcome: 'Willkommen',
+    stepDetails: 'Details',
+    stepContact: 'Kontakt',
+    q_role: 'Willkommen bei Harestack! Du bist\u2026',
+    role_guest: 'Gast',
+    role_guest_hint: 'Einfach mal schauen oder eine Frage',
+    role_hr: 'HR / Recruiter',
+    role_hr_hint: 'Auf der Suche nach Talenten',
+    role_customer: 'Kunde',
+    role_customer_hint: 'Hast ein Projekt im Sinn',
+    q_guest: 'Was f\u00fchrt dich her?',
+    q_hr: 'Erz\u00e4hl mir von der Stelle',
+    q_customer: 'Erz\u00e4hl mir von deinem Projekt',
+    q_contact: 'Wie kann ich dich erreichen?',
+    lbl_company: 'Unternehmen',
+    lbl_role: 'Zu besetzende Rolle',
+    lbl_jd: 'Stellenbeschreibung oder Link',
+    lbl_budget: 'Budgetrahmen',
+    lbl_email: 'Deine E-Mail',
+    lbl_name: 'Dein Name',
+    ph_guest: 'Deine Nachricht\u2026',
+    ph_company: 'Musterfirma GmbH',
+    ph_role: 'Senior Backend Engineer',
+    ph_jd: 'JD oder URL einf\u00fcgen\u2026',
+    ph_project: 'Beschreibe dein Projekt\u2026',
+    ph_email: 'du@beispiel.de',
+    ph_name: 'Max Mustermann',
+    opt_select: 'Ausw\u00e4hlen\u2026',
+    opt_unsure: 'Noch unsicher',
+    nav_back: 'Zur\u00fcck',
+    nav_next: 'Weiter',
+    nav_send: 'Absenden',
+    done_title: 'Danke!',
+    done_sub: 'Ich melde mich bald bei dir.',
+    err_email: 'Bitte gib eine g\u00fcltige E-Mail ein.',
+    err_required: 'Bitte f\u00fclle alle Felder aus.',
+    err_send: 'Etwas ist schiefgelaufen. Versuch es erneut oder schreib mir direkt.',
+  }
 };
 
-// ── Bunny color palettes ──────────────────────────────────────────────────
+// ── Bunny color palettes ──────────────────────────────────────────
 var themesLight = [
   { top:'#F5F0E8', front:'#E0D9CE', right:'#CCC4B8', back:'#C0B8AC', bottom:'#B8B0A4', left:'#D4CCC0',
     earF:'#EDE6DB', earB:'#C8C0B6', earTop:'#F0EBE2', earRight:'#C4BAB0', inner:'#EDAAB2' },
@@ -651,13 +1188,10 @@ var themesLight = [
 ];
 
 var themesDark = [
-  /* warm slate — soft charcoal with rosy accents */
   { top:'#5C545E', front:'#4A424E', right:'#3E3842', back:'#363038', bottom:'#302C34', left:'#443E48',
     earF:'#564E58', earB:'#3E3842', earTop:'#605860', earRight:'#3A3440', inner:'#C47882' },
-  /* midnight indigo — deep blue with cool violet accents */
   { top:'#464868', front:'#383A58', right:'#2E3050', back:'#282A46', bottom:'#242640', left:'#34365A',
     earF:'#424460', earB:'#2E3050', earTop:'#4C4E6E', earRight:'#2A2C4E', inner:'#7E82C8' },
-  /* dark teal — ocean depth with aqua accents */
   { top:'#3E5E5A', front:'#304E4A', right:'#28423E', back:'#223A36', bottom:'#1E3430', left:'#2C4844',
     earF:'#3A5854', earB:'#28423E', earTop:'#42625E', earRight:'#263E3C', inner:'#5AACA0' },
 ];
@@ -665,13 +1199,10 @@ var themesDark = [
 let currentLang = 'en';
 let currentTheme = 'light';
 
-// Respect saved prefs only — default is light
 if (localStorage.getItem('hs-theme')) setTheme(localStorage.getItem('hs-theme'));
 if (localStorage.getItem('hs-lang')) setLang(localStorage.getItem('hs-lang'));
 
-function toggleTheme() {
-  setTheme(currentTheme === 'light' ? 'dark' : 'light');
-}
+function toggleTheme() { setTheme(currentTheme === 'light' ? 'dark' : 'light'); }
 
 function setTheme(t) {
   currentTheme = t;
@@ -679,39 +1210,269 @@ function setTheme(t) {
   document.getElementById('icon-sun').style.display  = t === 'dark' ? 'none' : '';
   document.getElementById('icon-moon').style.display = t === 'dark' ? '' : 'none';
   localStorage.setItem('hs-theme', t);
-  // Recolor bunnies if loaded
   if (typeof recolorBunnies === 'function') {
     recolorBunnies(t === 'dark' ? themesDark : themesLight);
   }
 }
 
-function toggleLang() {
-  setLang(currentLang === 'en' ? 'de' : 'en');
-}
+function toggleLang() { setLang(currentLang === 'en' ? 'de' : 'en'); }
 
 function setLang(lang) {
   currentLang = lang;
   document.documentElement.lang = lang;
 
-  // Update toggle indicator
   document.getElementById('lang-en').classList.toggle('active', lang === 'en');
   document.getElementById('lang-de').classList.toggle('active', lang === 'de');
 
-  // Update i18n text
+  // Text content
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (i18n[lang][key]) el.textContent = i18n[lang][key];
   });
 
-  // Swap typeform
-  document.getElementById('tf-en').style.display = lang === 'en' ? '' : 'none';
-  document.getElementById('tf-de').style.display = lang === 'de' ? '' : 'none';
+  // Placeholders
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.getAttribute('data-i18n-ph');
+    if (i18n[lang][key]) el.placeholder = i18n[lang][key];
+  });
 
-  // Swap CV download link
+  // CV link
   document.getElementById('cv-link').href = lang === 'de' ? '/lebenslauf.pdf' : '/cv.pdf';
+
+  // Update submit button text if on last real step
+  if (typeof updateNavLabels === 'function') updateNavLabels();
 
   localStorage.setItem('hs-lang', lang);
 }
+
+function t(key) { return i18n[currentLang][key] || key; }
+</script>
+
+<!-- ── Multi-step form engine ──────────────────────────────────── -->
+<script>
+// ══════════════════════════════════════════════════════════════════
+//  CONFIG — change this to your Worker URL after deploying
+// ══════════════════════════════════════════════════════════════════
+const WORKER_URL = '/api/contact';  // proxied through CF Pages or use full URL
+
+// ── State ─────────────────────────────────────────────────────────
+let currentStep = 0;
+let selectedRole = null;
+const totalSteps = 3; // 0=role, 1=details, 2=contact, 3=done
+
+const btnBack  = document.getElementById('btn-back');
+const btnNext  = document.getElementById('btn-next');
+const progress = document.getElementById('progress-bar');
+const formErr  = document.getElementById('form-error');
+const nav      = document.getElementById('hs-nav');
+
+// ── Step management ──────────────────────────────────────────────
+function getActiveStep() {
+  return document.querySelector('.hs-step.active');
+}
+
+function showStep(n, direction) {
+  const current = getActiveStep();
+  if (current) {
+    current.classList.remove('active');
+    if (direction === 'forward') current.classList.add('exit-left');
+    setTimeout(() => current.classList.remove('exit-left'), 350);
+  }
+
+  // Find the right step element
+  let target;
+  if (n === 1 && selectedRole) {
+    target = document.querySelector(`.hs-step[data-step="1"][data-branch="${selectedRole}"]`);
+  } else {
+    target = document.querySelector(`.hs-step[data-step="${n}"]:not([data-branch])`);
+    if (!target) target = document.querySelector(`.hs-step[data-step="${n}"]`);
+  }
+
+  if (target) {
+    // Reset animation direction
+    if (direction === 'back') {
+      target.style.transform = 'translateX(-40px)';
+      requestAnimationFrame(() => {
+        target.classList.add('active');
+        requestAnimationFrame(() => { target.style.transform = ''; });
+      });
+    } else {
+      target.style.transform = '';
+      setTimeout(() => target.classList.add('active'), 20);
+    }
+  }
+
+  currentStep = n;
+  updateProgress();
+  updateNav();
+  formErr.textContent = '';
+
+  // Auto-focus first input in new step
+  setTimeout(() => {
+    const firstInput = target?.querySelector('input, textarea, select');
+    if (firstInput) firstInput.focus();
+  }, 100);
+}
+
+function updateProgress() {
+  const pct = currentStep === 3 ? 100 : Math.round((currentStep / totalSteps) * 100);
+  progress.style.width = pct + '%';
+}
+
+function updateNav() {
+  btnBack.classList.toggle('hidden', currentStep === 0 || currentStep === 3);
+  nav.style.display = currentStep === 3 ? 'none' : '';
+  updateNavLabels();
+  validateCurrent();
+}
+
+function updateNavLabels() {
+  const nextLabel = btnNext.querySelector('[data-i18n]');
+  if (currentStep === 2) {
+    nextLabel.setAttribute('data-i18n', 'nav_send');
+    nextLabel.textContent = t('nav_send');
+  } else {
+    nextLabel.setAttribute('data-i18n', 'nav_next');
+    nextLabel.textContent = t('nav_next');
+  }
+}
+
+// ── Validation ───────────────────────────────────────────────────
+function validateCurrent() {
+  let valid = false;
+
+  if (currentStep === 0) {
+    valid = !!selectedRole;
+  } else if (currentStep === 1) {
+    if (selectedRole === 'guest') {
+      valid = !!document.getElementById('f-guest-msg').value.trim();
+    } else if (selectedRole === 'hr') {
+      valid = !!document.getElementById('f-hr-company').value.trim()
+           && !!document.getElementById('f-hr-role').value.trim();
+    } else if (selectedRole === 'customer') {
+      valid = !!document.getElementById('f-cust-project').value.trim()
+           && !!document.getElementById('f-cust-budget').value;
+    }
+  } else if (currentStep === 2) {
+    const email = document.getElementById('f-email').value.trim();
+    const name  = document.getElementById('f-name').value.trim();
+    valid = !!name && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  btnNext.disabled = !valid;
+  return valid;
+}
+
+// Live validation on input
+document.querySelectorAll('.field-input, .field-textarea, .field-select').forEach(el => {
+  el.addEventListener('input', validateCurrent);
+  el.addEventListener('change', validateCurrent);
+});
+
+// ── Role selection ───────────────────────────────────────────────
+document.querySelectorAll('.role-card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    selectedRole = card.dataset.role;
+    validateCurrent();
+    // Auto-advance after short delay
+    setTimeout(() => { if (selectedRole) advance(); }, 250);
+  });
+
+  card.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+  });
+});
+
+// Keyboard shortcuts for role selection (1, 2, 3)
+document.addEventListener('keydown', (e) => {
+  if (currentStep !== 0) return;
+  const roles = ['guest', 'hr', 'customer'];
+  const idx = parseInt(e.key) - 1;
+  if (idx >= 0 && idx < 3) {
+    document.querySelector(`.role-card[data-role="${roles[idx]}"]`).click();
+  }
+});
+
+// ── Navigation ───────────────────────────────────────────────────
+function advance() {
+  if (currentStep === 2) {
+    submitForm();
+    return;
+  }
+  if (currentStep < 3) showStep(currentStep + 1, 'forward');
+}
+
+function goBack() {
+  if (currentStep > 0) showStep(currentStep - 1, 'back');
+}
+
+btnNext.addEventListener('click', advance);
+btnBack.addEventListener('click', goBack);
+
+// Enter key advances (except in textareas)
+document.getElementById('hs-form').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && !btnNext.disabled) {
+    e.preventDefault();
+    advance();
+  }
+});
+
+// ── Submit ───────────────────────────────────────────────────────
+async function submitForm() {
+  if (!validateCurrent()) return;
+
+  const nextLabel = btnNext.querySelector('[data-i18n]');
+  btnNext.classList.add('sending');
+  nextLabel.textContent = '';
+  btnNext.querySelector('svg').style.display = 'none';
+  const spinner = document.createElement('span');
+  spinner.className = 'spinner';
+  btnNext.insertBefore(spinner, nextLabel);
+
+  const email = document.getElementById('f-email').value.trim();
+  const name  = document.getElementById('f-name').value.trim();
+
+  let fields = {};
+  if (selectedRole === 'guest') {
+    fields = { Message: document.getElementById('f-guest-msg').value.trim() };
+  } else if (selectedRole === 'hr') {
+    fields = {
+      Company: document.getElementById('f-hr-company').value.trim(),
+      Role: document.getElementById('f-hr-role').value.trim(),
+      'Job Description': document.getElementById('f-hr-jd').value.trim(),
+    };
+  } else if (selectedRole === 'customer') {
+    fields = {
+      Project: document.getElementById('f-cust-project').value.trim(),
+      Budget: document.getElementById('f-cust-budget').value,
+    };
+  }
+
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ role: selectedRole, name, email, fields }),
+    });
+
+    if (!res.ok) throw new Error('Server error');
+
+    showStep(3, 'forward');
+  } catch (err) {
+    formErr.textContent = t('err_send');
+  } finally {
+    spinner.remove();
+    btnNext.classList.remove('sending');
+    nextLabel.textContent = t('nav_send');
+    btnNext.querySelector('svg').style.display = '';
+  }
+}
+
+// Initial state
+updateProgress();
+updateNav();
 </script>
 
 <!-- ── Bunny animation engine ──────────────────────────────────── -->
