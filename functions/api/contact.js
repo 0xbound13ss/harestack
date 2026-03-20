@@ -114,7 +114,7 @@ async function handlePost(request, env) {
       body: JSON.stringify({
         from: FROM_ADDR,
         to: [RECIPIENT],
-        reply_to: email,
+        replyTo: email,
         subject,
         html,
         text,
@@ -176,7 +176,7 @@ function buildHtml(role, name, email, fields) {
         ${rows}
       </table>
       <p style="margin-top:16px;font-size:12px;color:#9B93A8;text-align:center">
-        Sent from harestack.dev contact form
+        Sent from harestack.app contact form
       </p>
     </div>`;
 }
@@ -191,6 +191,6 @@ function buildPlain(role, name, email, fields) {
   for (const [k, v] of Object.entries(fields)) {
     if (v) lines.push(`${k}: ${v}`);
   }
-  lines.push('', '— Sent from harestack.dev contact form');
+  lines.push('', '— Sent from harestack.app contact form');
   return lines.join('\n');
 }
