@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harestack — Ivan Neia</title>
+<meta name="description" content="Backend & DevOps developer. Get in touch.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+  /* ── Reset & base ─────────────────────────────────────────────── */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #F0EDEA;
+    --card: #FFFFFF;
+    --text: #2A1F3D;
+    --text-soft: #6B5F7B;
+    --accent-beige: #EDAAB2;
+    --accent-purple: #C0AEED;
+    --accent-green: #9EC49E;
+    --radius: 16px;
+    --shadow: 0 2px 12px rgba(42, 31, 61, 0.06);
+  }
+
+  html { height: 100%; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Main 3-column layout ─────────────────────────────────────── */
+  .page {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 260px 1fr 220px;
+    gap: 24px;
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    min-height: 0;
+  }
+
+  /* ── Left column — logo ───────────────────────────────────────── */
+  .col-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+  }
+
+  .logo-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  /* ── Center column — typeform ─────────────────────────────────── */
+  .col-center {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .form-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    flex: 1;
+    overflow: hidden;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-card [data-tf-live] {
+    flex: 1;
+    width: 100%;
+  }
+
+  /* ── Right column — links & CV ────────────────────────────────── */
+  .col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 20px;
+  }
+
+  .cv-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    text-align: center;
+  }
+
+  .cv-card h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+
+  .cv-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 1.5px solid var(--text);
+    background: transparent;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .cv-btn:hover {
+    background: var(--text);
+    color: var(--card);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(42, 31, 61, 0.15);
+  }
+
+  .cv-btn svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+  }
+
+  .cv-btn:hover svg { transform: translateY(2px); }
+
+  .links-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    flex: 1;
+  }
+
+  .links-card h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 15px;
+    margin-bottom: 16px;
+  }
+
+  .link-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .link-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.2s ease;
+    background: rgba(42, 31, 61, 0.03);
+  }
+
+  .link-item:hover {
+    background: rgba(42, 31, 61, 0.07);
+    transform: translateX(3px);
+  }
+
+  .link-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .link-icon svg { width: 18px; height: 18px; }
+
+  .link-icon.gh  { background: rgba(42, 31, 61, 0.08); color: var(--text); }
+  .link-icon.li  { background: rgba(192, 174, 237, 0.25); color: #5B4BA0; }
+  .link-icon.em  { background: rgba(237, 170, 178, 0.25); color: #B85A64; }
+
+  .link-label { font-weight: 500; }
+  .link-handle { color: var(--text-soft); font-size: 12px; font-weight: 300; }
+
+  /* ── Footer ───────────────────────────────────────────────────── */
+  .footer {
+    text-align: center;
+    padding: 20px 0 4px;
+    font-size: 12px;
+    color: var(--text-soft);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  .footer a {
+    color: var(--text-soft);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(107, 95, 123, 0.3);
+    transition: border-color 0.2s;
+  }
+  .footer a:hover { border-color: var(--text-soft); }
+
+  /* ── Animated logo (inlined from standalone) ──────────────────── */
+  .logo-anim-wrap {
+    display: flex; align-items: center; justify-content: center;
+    width: 260px;
+    height: 320px;
+    overflow: visible;
+  }
+
+  .logo-wrap-inner {
+    display: flex; flex-direction: column; align-items: center;
+    transform: scale(1.35);
+    transform-origin: center center;
+  }
+
+  .persp {
+    perspective: 750px;
+    perspective-origin: 50% 140%;
+  }
+
+  .scene {
+    position: relative;
+    width: 140px;
+    height: 280px;
+    overflow: visible;
+    transform-style: preserve-3d;
+    transform: rotateX(-45deg) rotateY(36deg);
+  }
+
+  .bunny {
+    position: absolute;
+    left: 12px;
+    width: 72px;
+    transform-style: preserve-3d;
+    will-change: top;
+  }
+
+  .ears {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    padding-bottom: 1px;
+    transform-style: preserve-3d;
+  }
+
+  .ear {
+    width: 14px; height: 25px;
+    position: relative;
+    transform-style: preserve-3d;
+    transform-origin: 50% 100%;
+    animation: ear-idle 2.6s ease-in-out infinite alternate;
+  }
+  .ear:last-child { animation-delay: 0.35s; animation-duration: 2.1s; }
+
+  @keyframes ear-idle {
+    0%   { transform: rotateZ(-3deg) rotateX(4deg); }
+    35%  { transform: rotateZ(1deg)  rotateX(-2deg); }
+    65%  { transform: rotateZ(-1deg) rotateX(1deg); }
+    100% { transform: rotateZ(3deg)  rotateX(-4deg); }
+  }
+
+  .ear-face {
+    position: absolute; inset: 0;
+    border-radius: 7px 7px 3px 3px;
+    backface-visibility: hidden;
+  }
+  .ef-front { transform: translateZ(3px); }
+  .ef-back  { transform: rotateY(180deg) translateZ(3px); }
+
+  .ear-top {
+    position: absolute; width: 14px; height: 6px;
+    top: 0; left: 0;
+    border-radius: 7px 7px 0 0;
+    transform: rotateX(90deg) translateZ(0px);
+    backface-visibility: hidden;
+  }
+
+  .ear-right {
+    position: absolute; width: 6px; height: 25px;
+    top: 0; right: 0;
+    border-radius: 0 7px 3px 0;
+    transform: rotateY(90deg) translateZ(11px);
+    transform-origin: right center;
+    backface-visibility: hidden;
+  }
+
+  .ear-inner {
+    position: absolute; top: 6px; left: 50%;
+    width: 6px; height: 13px; border-radius: 3px;
+    transform: translateX(-50%) translateZ(3.5px);
+  }
+
+  .ear.anim-jump  { animation: ear-jump 0.44s cubic-bezier(0.22,0,0.4,1) forwards !important; }
+  .ear.anim-jump:last-child { animation-delay: 0.045s !important; }
+  @keyframes ear-jump {
+    0%   { transform: rotateX(0deg) rotateZ(0deg); }
+    8%   { transform: rotateX(10deg) rotateZ(0deg); }
+    18%  { transform: rotateX(-68deg) rotateZ(-9deg); }
+    35%  { transform: rotateX(-50deg) rotateZ(11deg); }
+    55%  { transform: rotateX(-58deg) rotateZ(5deg); }
+    75%  { transform: rotateX(-46deg) rotateZ(8deg); }
+    100% { transform: rotateX(-40deg) rotateZ(6deg); }
+  }
+
+  .ear.anim-land  { animation: ear-land 0.60s cubic-bezier(0.22,1,0.36,1) forwards !important; }
+  .ear.anim-land:last-child { animation-delay: 0.055s !important; }
+  @keyframes ear-land {
+    0%   { transform: rotateX(-40deg) rotateZ(6deg); }
+    14%  { transform: rotateX(58deg) rotateZ(-14deg); }
+    30%  { transform: rotateX(-28deg) rotateZ(8deg); }
+    44%  { transform: rotateX(18deg) rotateZ(-5deg); }
+    58%  { transform: rotateX(-9deg) rotateZ(3deg); }
+    72%  { transform: rotateX(4deg) rotateZ(-1deg); }
+    86%  { transform: rotateX(-1.5deg) rotateZ(0.5deg); }
+    100% { transform: rotateX(0deg) rotateZ(0deg); }
+  }
+
+  .ear.anim-perk  { animation: ear-perk 0.55s cubic-bezier(0.34,1.56,0.64,1) forwards !important; }
+  .ear.anim-perk:last-child { animation-delay: 0.08s !important; }
+  @keyframes ear-perk {
+    0%   { transform: rotateX(0deg) rotateZ(0deg); }
+    20%  { transform: rotateX(22deg) rotateZ(-4deg); }
+    45%  { transform: rotateX(-10deg) rotateZ(2deg); }
+    65%  { transform: rotateX(14deg) rotateZ(-2deg); }
+    82%  { transform: rotateX(-4deg) rotateZ(0.5deg); }
+    100% { transform: rotateX(5deg) rotateZ(-1deg); }
+  }
+
+  .ear.anim-shift { animation: ear-shift 0.40s cubic-bezier(0.22,1,0.36,1) forwards !important; }
+  .ear.anim-shift:last-child { animation-delay: 0.06s !important; }
+  @keyframes ear-shift {
+    0%   { transform: rotateX(0deg) rotateZ(0deg); }
+    25%  { transform: rotateX(-14deg) rotateZ(6deg); }
+    50%  { transform: rotateX(8deg) rotateZ(-3deg); }
+    72%  { transform: rotateX(-3deg) rotateZ(1deg); }
+    100% { transform: rotateX(0deg) rotateZ(0deg); }
+  }
+
+  .cube {
+    width: 72px; height: 50px;
+    position: relative;
+    transform-style: preserve-3d;
+  }
+
+  .face { position: absolute; backface-visibility: hidden; }
+  .fc-front  { width: 72px; height: 50px; transform: translateZ(36px); border-radius: 4px; }
+  .fc-back   { width: 72px; height: 50px; transform: rotateY(180deg) translateZ(36px); border-radius: 4px; }
+  .fc-top    { width: 72px; height: 72px; transform: rotateX(90deg) translateZ(36px); border-radius: 4px; }
+  .fc-bottom { width: 72px; height: 72px; transform: rotateX(-90deg) translateZ(14px); border-radius: 4px; }
+  .fc-right  { width: 72px; height: 50px; transform: rotateY(90deg) translateZ(36px); border-radius: 4px; }
+  .fc-left   { width: 72px; height: 50px; transform: rotateY(-90deg) translateZ(36px); border-radius: 4px; }
+
+  .face-details {
+    position: absolute; width: 72px; height: 50px;
+    transform: translateZ(37px);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 5px;
+    pointer-events: none;
+  }
+  .eyes { display: flex; gap: 16px; }
+  .eye  { width: 7px; height: 7px; border-radius: 2px; background: #2A1F3D; }
+  .nose { width: 6px; height: 5px; border-radius: 2.5px; }
+
+  /* ── Entrance animations ──────────────────────────────────────── */
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .col-left   { animation: fade-up 0.6s ease both; animation-delay: 0.1s; }
+  .col-center { animation: fade-up 0.6s ease both; animation-delay: 0.25s; }
+  .col-right  { animation: fade-up 0.6s ease both; animation-delay: 0.4s; }
+
+  /* ── Responsive ───────────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .page {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr auto;
+      max-width: 640px;
+    }
+    .col-left {
+      flex-direction: row;
+      gap: 16px;
+      padding-top: 0;
+      justify-content: center;
+    }
+    .logo-card { width: auto; }
+    .logo-anim-wrap { width: 160px; height: 200px; }
+    .logo-wrap-inner { transform: scale(0.85); }
+    .form-card { min-height: 480px; }
+    .col-right {
+      flex-direction: row;
+      padding-top: 0;
+    }
+    .cv-card, .links-card { flex: 1; }
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 12px; }
+    .page { gap: 12px; }
+    .col-right { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ══ Left column: Logo ══ -->
+  <div class="col-left">
+    <div class="logo-card">
+      <div class="logo-anim-wrap">
+        <div class="logo-wrap-inner">
+          <div class="persp">
+            <div class="scene" id="scene"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Center column: Typeform ══ -->
+  <div class="col-center">
+    <div class="form-card" id="form-card">
+      <div data-tf-live="01KM4N4645514PFXY148KKEAEF"></div>
+      <script src="//embed.typeform.com/next/embed.js"></script>
+    </div>
+  </div>
+
+  <!-- ══ Right column: CV + Links ══ -->
+  <div class="col-right">
+
+    <div class="cv-card">
+      <h3>Résumé</h3>
+      <!-- Replace # with actual PDF link -->
+      <a href="#" class="cv-btn" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Download PDF
+      </a>
+    </div>
+
+    <div class="links-card">
+      <h3>Connect</h3>
+      <ul class="link-list">
+        <!-- GitHub -->
+        <li>
+          <a href="https://github.com/0xbound13ss" target="_blank" rel="noopener" class="link-item">
+            <div class="link-icon gh">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.341-3.369-1.341-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+            </div>
+            <div>
+              <div class="link-label">GitHub</div>
+              <div class="link-handle">@0xbound13ss</div>
+            </div>
+          </a>
+        </li>
+        <!-- LinkedIn -->
+        <li>
+          <a href="https://www.linkedin.com/in/ivanpush/" target="_blank" rel="noopener" class="link-item">
+            <div class="link-icon li">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </div>
+            <div>
+              <div class="link-label">LinkedIn</div>
+              <div class="link-handle">/in/ivanpush</div>
+            </div>
+          </a>
+        </li>
+        <!-- Email -->
+        <li>
+          <a href="/cdn-cgi/l/email-protection#345c5158585b745a515d551a53465b4144" class="link-item">
+            <div class="link-icon em">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <path d="M22 7l-10 7L2 7"/>
+              </svg>
+            </div>
+            <div>
+              <div class="link-label">Email</div>
+              <div class="link-handle"><span class="__cf_email__" data-cfemail="abc3cec7c7c4ebc5cec2ca85ccd9c4dedb">[email&#160;protected]</span></div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
+<footer class="footer">
+  &copy; 2026 Ivan Neia &middot; <a href="https://neia.group">neia.group</a>
+</footer>
+
+<!-- ── Bunny animation engine ──────────────────────────────────── -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const SLOT_Y    = [6, 91, 176];
+const CYCLE_MS  = 1350;
+const ARC_MS    = 420;
+const SETTLE_MS = 250;
+
+const themes = [
+  { top:'#F5F0E8', front:'#E0D9CE', right:'#CCC4B8', back:'#C0B8AC', bottom:'#B8B0A4', left:'#D4CCC0',
+    earF:'#EDE6DB', earB:'#C8C0B6', earTop:'#F0EBE2', earRight:'#C4BAB0', inner:'#EDAAB2' },
+  { top:'#EDE9FA', front:'#D4CEE8', right:'#BEB8D8', back:'#B4AED0', bottom:'#ACA6C8', left:'#C8C2DA',
+    earF:'#E3DDF5', earB:'#BEB8E0', earTop:'#EAE6F8', earRight:'#B2ACd4', inner:'#C0AEED' },
+  { top:'#E4F2E4', front:'#C8DCC8', right:'#ADC4AD', back:'#A0B8A0', bottom:'#98B098', left:'#B8CCB8',
+    earF:'#D8EDD8', earB:'#AECAAE', earTop:'#E0EEE0', earRight:'#A0BC9E', inner:'#9EC49E' },
+];
+
+function makeBunny(t) {
+  const b = document.createElement('div');
+  b.className = 'bunny';
+  b.innerHTML = `
+    <div class="ears">
+      <div class="ear">
+        <div class="ear-face ef-front" style="background:${t.earF}"></div>
+        <div class="ear-face ef-back"  style="background:${t.earB}"></div>
+        <div class="ear-top"           style="background:${t.earTop}"></div>
+        <div class="ear-right"         style="background:${t.earRight}"></div>
+        <div class="ear-inner"         style="background:${t.inner}"></div>
+      </div>
+      <div class="ear">
+        <div class="ear-face ef-front" style="background:${t.earF}"></div>
+        <div class="ear-face ef-back"  style="background:${t.earB}"></div>
+        <div class="ear-top"           style="background:${t.earTop}"></div>
+        <div class="ear-right"         style="background:${t.earRight}"></div>
+        <div class="ear-inner"         style="background:${t.inner}"></div>
+      </div>
+    </div>
+    <div class="cube">
+      <div class="face fc-top"    style="background:${t.top}"></div>
+      <div class="face fc-front"  style="background:${t.front}"></div>
+      <div class="face fc-right"  style="background:${t.right}"></div>
+      <div class="face fc-back"   style="background:${t.back}"></div>
+      <div class="face fc-bottom" style="background:${t.bottom}"></div>
+      <div class="face fc-left"   style="background:${t.left}"></div>
+      <div class="face-details">
+        <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+        <div class="nose" style="background:${t.inner}"></div>
+      </div>
+    </div>`;
+  return b;
+}
+
+const scene   = document.getElementById('scene');
+const bunnies = themes.map(t => { const b = makeBunny(t); scene.appendChild(b); return b; });
+
+let slots     = [0, 1, 2];
+let animating = false;
+
+function place(bIdx, sIdx, dur = 0) {
+  const b = bunnies[bIdx];
+  b.style.transition = dur ? `top ${dur}ms cubic-bezier(0.34, 1.56, 0.64, 1)` : '';
+  b.style.top = SLOT_Y[sIdx] + 'px';
+}
+for (let i = 0; i < 3; i++) place(i, slots[i]);
+
+function setEars(bunny, cls) {
+  bunny.querySelectorAll('.ear').forEach(e => {
+    e.classList.remove('anim-jump', 'anim-land', 'anim-perk', 'anim-shift');
+    void e.offsetWidth;
+    if (cls) e.classList.add(cls);
+  });
+}
+
+const DY = SLOT_Y[2] - SLOT_Y[0];
+
+const arcFrames = [
+  { transform: `translate3d(0px, 0px, 3px) scaleY(0.86) scaleX(1.14)`,            offset: 0.00 },
+  { transform: `translate3d(10px, ${DY*0.15}px, 38px) scaleY(1.06) scaleX(0.94)`, offset: 0.16 },
+  { transform: `translate3d(22px, ${DY*0.42}px, 54px) scaleY(1) scaleX(1)`,       offset: 0.36 },
+  { transform: `translate3d(17px, ${DY*0.65}px, 38px) scaleY(1) scaleX(1)`,       offset: 0.52 },
+  { transform: `translate3d(8px, ${DY*0.86}px, 15px) scaleY(1) scaleX(1)`,        offset: 0.72 },
+  { transform: `translate3d(2px, ${DY*0.97}px, 2px) scaleY(0.84) scaleX(1.16)`,   offset: 0.88 },
+  { transform: `translate3d(0px, ${DY}px, 0px) scaleY(1) scaleX(1)`,              offset: 1.00 },
+];
+
+function runCycle() {
+  if (animating) return;
+  animating = true;
+
+  const jIdx   = slots.indexOf(0);
+  const jumper = bunnies[jIdx];
+  setEars(jumper, 'anim-jump');
+
+  const anim = jumper.animate(arcFrames, {
+    duration: ARC_MS, easing: 'linear', fill: 'forwards',
+  });
+
+  setTimeout(() => {
+    for (let i = 0; i < 3; i++) {
+      if (i === jIdx) continue;
+      slots[i]--;
+      place(i, slots[i], SETTLE_MS);
+      if (slots[i] === 0) setEars(bunnies[i], 'anim-perk');
+      else if (slots[i] === 1) setEars(bunnies[i], 'anim-shift');
+    }
+  }, ARC_MS * 0.42);
+
+  anim.onfinish = () => {
+    anim.cancel();
+    slots[jIdx] = 2;
+    jumper.style.transition = '';
+    jumper.style.top        = SLOT_Y[2] + 'px';
+    jumper.style.transform  = '';
+    setEars(jumper, 'anim-land');
+    setTimeout(() => { for (let i = 0; i < 3; i++) setEars(bunnies[i], null); }, 650);
+    setTimeout(() => { animating = false; runCycle(); }, CYCLE_MS - ARC_MS);
+  };
+}
+
+setTimeout(runCycle, 700);
+</script>
+</body>
+</html>
